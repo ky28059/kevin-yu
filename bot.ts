@@ -15,26 +15,35 @@ const client = new Client({
     allowedMentions: {repliedUser: false}
 });
 
+const updateTime = 300000 // 1000 * 60 * 60 * 24;
+let lastRunTimestamp: number;
+
+// Randomizes the server name and icon
+async function updateServerName() {
+    const names = [
+        'victor dang', 'angeline hu', 'roger fan', 'maya chill perkash',
+        'leo yao', 'alexander liu', 'chinyoung shao'
+    ];
+    const name = names[Math.floor(Math.random() * names.length)];
+
+    // Set the guild name and random icon
+    const guild = client.guilds.cache.get('859197712426729532');
+    if (!guild) return;
+    const icons = readdirSync(`./icons/${name}`);
+    const icon = icons[Math.floor(Math.random() * icons.length)];
+
+    await guild.setName(name);
+    await guild.setIcon(`./icons/${name}/${icon}`);
+
+    lastRunTimestamp = Date.now();
+}
+
 client.once('ready', async () => {
     console.log(`Logged in as ${client.user?.tag}!`);
 
-    // Update the server name every 24 hours
-    setInterval(() => {
-        const names = [
-            'victor dang', 'angeline hu', 'roger fan', 'maya chill perkash',
-            'leo yao', 'alexander liu', 'chinyoung shao'
-        ];
-        const name = names[Math.floor(Math.random() * names.length)];
-
-        // Set the guild name and random icon
-        const guild = client.guilds.cache.get('859197712426729532');
-        if (!guild) return;
-        const icons = readdirSync(`./icons/${name}`);
-        const icon = icons[Math.floor(Math.random() * icons.length)];
-
-        guild.setName(name);
-        guild.setIcon(`./icons/${name}/${icon}`);
-    }, 10000 /* 1000 * 60 * 60 * 24 */);
+    // Update the server name immediately and on an interval specified by `updateTime`
+    await updateServerName();
+    setInterval(updateServerName, updateTime);
 });
 
 client.on('messageCreate', async (message) => {
@@ -65,6 +74,15 @@ client.on('interactionCreate', async (interaction) => {
             .addField('server name shuffling', 'Every 24 hours, the server name is shuffled randomly between the cool people of this server 🥰')
 
         await interaction.reply({embeds: [helpEmbed]});
+    }
+
+    if (interaction.commandName === 'status') {
+        const statusEmbed = new MessageEmbed()
+            .setTitle('Server name status')
+            .setColor(0xf6b40c)
+            .setDescription(`The server name was last updated on <t:${Math.floor(lastRunTimestamp / 1000)}>. The next update is scheduled for <t:${Math.floor((lastRunTimestamp + updateTime) / 1000)}>, <t:${Math.floor((lastRunTimestamp + updateTime) / 1000)}:R>.`)
+
+        await interaction.reply({embeds: [statusEmbed]});
     }
 });
 

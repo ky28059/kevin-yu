@@ -8,6 +8,10 @@ const commands = [
     new SlashCommandBuilder()
         .setName('help')
         .setDescription('Helps you understand.')
+        .toJSON(),
+    new SlashCommandBuilder()
+        .setName('status')
+        .setDescription('Gets the status of the server name refresh loop.')
         .toJSON()
 ];
 
