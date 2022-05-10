@@ -1,4 +1,5 @@
 import {Client, MessageEmbed, TextChannel} from 'discord.js';
+import {readdirSync} from 'fs';
 import {token} from './auth';
 
 
@@ -24,8 +25,16 @@ client.once('ready', async () => {
             'leo yao', 'alexander liu', 'chinyoung shao'
         ];
         const name = names[Math.floor(Math.random() * names.length)];
-        client.guilds.cache.get('859197712426729532')?.setName(name);
-    }, 1000 * 60 * 60 * 24);
+
+        // Set the guild name and random icon
+        const guild = client.guilds.cache.get('859197712426729532');
+        if (!guild) return;
+        const icons = readdirSync(`./icons/${name}`);
+        const icon = icons[Math.floor(Math.random() * icons.length)];
+
+        guild.setName(name);
+        guild.setIcon(`./icons/${name}/${icon}`);
+    }, 10000 /* 1000 * 60 * 60 * 24 */);
 });
 
 client.on('messageCreate', async (message) => {

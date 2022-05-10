@@ -78,5 +78,6 @@ typings/
 # IDE
 .idea
 
-# auth
+# private
 auth.ts
+icons/*
