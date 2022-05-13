@@ -96,9 +96,7 @@ client.on('interactionCreate', async (interaction) => {
             .addField('server name shuffling', 'Every 24 hours, the server name is shuffled randomly between the cool people of this server 🥰')
 
         await interaction.reply({embeds: [helpEmbed]});
-    }
-
-    if (interaction.commandName === 'status') {
+    } else if (interaction.commandName === 'status') {
         const lastRunDiscordTimestamp = Math.floor(statusInfo.lastRunTimestamp / 1000);
         const nextRunDiscordTimestamp = Math.floor((statusInfo.lastRunTimestamp + updateTime) / 1000);
 
@@ -108,6 +106,19 @@ client.on('interactionCreate', async (interaction) => {
             .setDescription(`The server name is currently ${formatStatusInfo()}.\n\nThe server was last updated on <t:${lastRunDiscordTimestamp}>. The next update is scheduled for <t:${nextRunDiscordTimestamp}>, <t:${nextRunDiscordTimestamp}:R>.`)
 
         await interaction.reply({embeds: [statusEmbed]});
+    } else if (interaction.commandName === 'refresh') {
+        // Clear the interval, then set it again to be relative to the new update time
+        clearInterval(updateInterval);
+        await updateServerName();
+        updateInterval = setInterval(updateServerName, updateTime);
+
+        const successEmbed = new MessageEmbed()
+            .setTitle('Refresh successful!')
+            .setColor(0xf6b40c)
+            .setDescription(`The server name is now ${formatStatusInfo()}. The next update is scheduled <t:${Math.floor((statusInfo.lastRunTimestamp + updateTime) / 1000)}:R>.`)
+            .setFooter({text: 'To avoid rate limits, it is recommended to refrain from calling this command again in the next 5 minutes.'})
+
+        await interaction.reply({embeds: [successEmbed]});
     }
 });
 

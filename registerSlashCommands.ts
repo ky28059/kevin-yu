@@ -12,6 +12,10 @@ const commands = [
     new SlashCommandBuilder()
         .setName('status')
         .setDescription('Gets the status of the server name refresh loop.')
+        .toJSON(),
+    new SlashCommandBuilder()
+        .setName('refresh')
+        .setDescription('Immediately refreshes the server name.')
         .toJSON()
 ];
 
