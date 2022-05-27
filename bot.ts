@@ -1,4 +1,5 @@
 import {Client, MessageEmbed, TextChannel} from 'discord.js';
+import {CronJob} from 'cron';
 import {readdirSync} from 'fs';
 import {token} from './auth';
 import {getHugGif, maxIndex} from "./hugs";
@@ -17,7 +18,6 @@ const client = new Client({
 });
 
 type ServerStatusInfo = {
-    lastRunTimestamp: number,
     name: string,
     iconName: string,
     iconNumber: number,
@@ -25,8 +25,8 @@ type ServerStatusInfo = {
 }
 let statusInfo: ServerStatusInfo;
 
-let updateInterval: NodeJS.Timeout;
-const updateTime = 1000 * 60 * 60 * 24;
+let serverUpdateJob: CronJob;
+let wooperWednesdayJob: CronJob;
 
 
 // Randomizes the server name and icon
@@ -47,12 +47,18 @@ async function updateServerName() {
     await guild.setIcon(`./icons/${name}/${icons[iconIndex]}`);
 
     statusInfo = {
-        lastRunTimestamp: Date.now(),
         name,
         iconName: icons[iconIndex],
         iconNumber: iconIndex + 1,
         totalIcons: icons.length
     }
+}
+
+// Reminds everyone that it is wooper wednesday!
+async function sendWooperWednesday() {
+    const channel = client.channels.cache.get('859197712426729535');
+    if (!channel || !(channel instanceof TextChannel)) return;
+    await channel.send('https://tenor.com/view/wooper-wednesday-wooper-wednesday-pokemon-gif-21444101');
 }
 
 // Formats the current server status info for display in commands
@@ -64,9 +70,20 @@ function formatStatusInfo() {
 client.once('ready', async () => {
     console.log(`Logged in as ${client.user?.tag}!`);
 
-    // Update the server name immediately and on an interval specified by `updateTime`
-    await updateServerName();
-    updateInterval = setInterval(updateServerName, updateTime);
+    // Start the server update and wooper wednesday cron jobs
+    serverUpdateJob = new CronJob({
+        cronTime: '0 0 * * *',
+        onTick: updateServerName,
+        start: true,
+        timeZone: 'America/Los_Angeles',
+        runOnInit: true
+    });
+    wooperWednesdayJob = new CronJob({
+        cronTime: '0 0 * * Wed',
+        onTick: sendWooperWednesday,
+        start: true,
+        timeZone: 'America/Los_Angeles'
+    });
 });
 
 client.on('messageCreate', async (message) => {
@@ -98,25 +115,22 @@ client.on('interactionCreate', async (interaction) => {
 
         await interaction.reply({embeds: [helpEmbed]});
     } else if (interaction.commandName === 'status') {
-        const lastRunDiscordTimestamp = Math.floor(statusInfo.lastRunTimestamp / 1000);
-        const nextRunDiscordTimestamp = Math.floor((statusInfo.lastRunTimestamp + updateTime) / 1000);
+        const lastRunTimestamp = Math.floor(serverUpdateJob.lastDate().valueOf() / 1000);
+        const nextRunTimestamp = Math.floor(serverUpdateJob.nextDate().valueOf() / 1000);
 
         const statusEmbed = new MessageEmbed()
             .setTitle('Server name status')
             .setColor(0xf6b40c)
-            .setDescription(`The server name is currently ${formatStatusInfo()}.\n\nThe server was last updated on <t:${lastRunDiscordTimestamp}>. The next update is scheduled for <t:${nextRunDiscordTimestamp}>, <t:${nextRunDiscordTimestamp}:R>.`)
+            .setDescription(`The server name is currently ${formatStatusInfo()}.\n\nThe server was last updated on <t:${lastRunTimestamp}>. The next update is scheduled for <t:${nextRunTimestamp}>, <t:${nextRunTimestamp}:R>.`)
 
         await interaction.reply({embeds: [statusEmbed]});
     } else if (interaction.commandName === 'refresh') {
-        // Clear the interval, then set it again to be relative to the new update time
-        clearInterval(updateInterval);
         await updateServerName();
-        updateInterval = setInterval(updateServerName, updateTime);
 
         const successEmbed = new MessageEmbed()
             .setTitle('Refresh successful!')
             .setColor(0xf6b40c)
-            .setDescription(`The server name is now ${formatStatusInfo()}. The next update is scheduled <t:${Math.floor((statusInfo.lastRunTimestamp + updateTime) / 1000)}:R>.`)
+            .setDescription(`The server name is now ${formatStatusInfo()}. The next update is scheduled <t:${Math.floor(serverUpdateJob.nextDate().valueOf() / 1000)}:R>.`)
             .setFooter({text: 'To avoid rate limits, it is recommended to refrain from calling this command again in the next 5 minutes.'})
 
         await interaction.reply({embeds: [successEmbed]});
