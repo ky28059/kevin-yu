@@ -1,6 +1,7 @@
 import {Client, MessageEmbed, TextChannel} from 'discord.js';
 import {readdirSync} from 'fs';
 import {token} from './auth';
+import {getHugGif, maxIndex} from "./hugs";
 
 
 const client = new Client({
@@ -30,10 +31,10 @@ const updateTime = 1000 * 60 * 60 * 24;
 
 // Randomizes the server name and icon
 async function updateServerName() {
-    const names = [
-        'victor dang', 'angeline hu', 'roger fan', 'maya chill perkash',
-        'leo yao', 'alexander liu', 'chinyoung shao'
-    ];
+    // Parse names from subdirectories of `./icons`
+    const names = readdirSync('./icons', {withFileTypes: true})
+        .filter(dir => dir.isDirectory())
+        .map(dir => dir.name);
     const name = names[Math.floor(Math.random() * names.length)];
 
     // Set the guild name and random icon
@@ -119,6 +120,16 @@ client.on('interactionCreate', async (interaction) => {
             .setFooter({text: 'To avoid rate limits, it is recommended to refrain from calling this command again in the next 5 minutes.'})
 
         await interaction.reply({embeds: [successEmbed]});
+    } else if (interaction.commandName === 'hug') {
+        const num = interaction.options.getInteger('num');
+        if (num && (num > maxIndex || num < 0)) return interaction.reply({
+            embeds: [
+                new MessageEmbed()
+                    .setAuthor({name: `Invalid index! Keep indexes between [0, ${maxIndex}].`})
+                    .setColor(0xf6b40c)
+            ]
+        });
+        await interaction.reply(getHugGif(num));
     }
 });
 

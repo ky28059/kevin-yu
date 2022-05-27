@@ -16,6 +16,13 @@ const commands = [
     new SlashCommandBuilder()
         .setName('refresh')
         .setDescription('Immediately refreshes the server name.')
+        .toJSON(),
+    new SlashCommandBuilder()
+        .setName('hug')
+        .setDescription('Send a hug!')
+        .addIntegerOption(option => option
+            .setName('num')
+            .setDescription('The hug gif to send. If not specified, this is randomized!'))
         .toJSON()
 ];
 
