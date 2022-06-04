@@ -1,8 +1,8 @@
 import {Client, MessageEmbed, TextChannel} from 'discord.js';
 import {CronJob} from 'cron';
 import {readdirSync} from 'fs';
+import {getHugGif, maxIndex} from './hugs';
 import {token} from './auth';
-import {getHugGif, maxIndex} from "./hugs";
 
 
 const client = new Client({
@@ -56,9 +56,13 @@ async function updateServerName() {
 
 // Reminds everyone that it is wooper wednesday!
 async function sendWooperWednesday() {
-    const channel = client.channels.cache.get('859197712426729535');
-    if (!channel || !(channel instanceof TextChannel)) return;
-    await channel.send('https://tenor.com/view/wooper-wednesday-wooper-wednesday-pokemon-gif-21444101');
+    const channels = ['859197712426729535', '928554105323016195'];
+
+    for (const id of channels) {
+        const channel = client.channels.cache.get(id);
+        if (!channel || !(channel instanceof TextChannel)) continue;
+        await channel.send('https://tenor.com/view/wooper-wednesday-wooper-wednesday-pokemon-gif-21444101');
+    }
 }
 
 // Formats the current server status info for display in commands
@@ -92,7 +96,7 @@ client.on('messageCreate', async (message) => {
 
     // Update #chill-perkash channel description automatically
     const match = message.content.match(/^maya "?(.+)"? perkash$/i)?.[1]?.replaceAll('"', '\'');
-    if (match) {
+    if (match && message.guildId === '859197712426729532') {
         const channel = client.channels.cache.get('956055434173751306');
         if (!channel || !(channel instanceof TextChannel)) return;
 
@@ -110,8 +114,14 @@ client.on('interactionCreate', async (interaction) => {
             .setTitle('kevin yu.')
             .setColor(0xf6b40c)
             .setDescription('It is I! ~~Dio~~ Kevin Yu! This bot occasionally does things. Ping <@355534246439419904> if it breaks.')
+
+        if (interaction.guildId === '859197712426729532') helpEmbed
             .addField('maya automated perkash', 'All messages matched in the form of `maya [...] perkash` will update the <#956055434173751306> description accordingly. For the curious, the regex used is `/^maya "?(.+)"? perkash$/i`.')
-            .addField('server name shuffling', 'Every 24 hours, the server name is shuffled randomly between the cool people of this server 🥰')
+            .addField('server name shuffling', 'Every 24 hours, the server name is shuffled randomly between the cool people of this server 🥰. Get the status of the refresh loop with `/status` and immediately trigger a refresh with `/refresh`.')
+
+        helpEmbed
+            .addField('wooper wednesday', 'A weekly celebration of wooper wednesday, as one is wont to observe.')
+            .addField('🫂', 'Use `/hug` to send a random hug gif :D')
 
         await interaction.reply({embeds: [helpEmbed]});
     } else if (interaction.commandName === 'status') {

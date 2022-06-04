@@ -4,18 +4,10 @@ import {Routes} from 'discord-api-types/v9';
 import {token} from './auth';
 
 
-const commands = [
+const globalCommands = [
     new SlashCommandBuilder()
         .setName('help')
         .setDescription('Helps you understand.')
-        .toJSON(),
-    new SlashCommandBuilder()
-        .setName('status')
-        .setDescription('Gets the status of the server name refresh loop.')
-        .toJSON(),
-    new SlashCommandBuilder()
-        .setName('refresh')
-        .setDescription('Immediately refreshes the server name.')
         .toJSON(),
     new SlashCommandBuilder()
         .setName('hug')
@@ -26,6 +18,17 @@ const commands = [
         .toJSON()
 ];
 
+const serverCommands = [
+    new SlashCommandBuilder()
+        .setName('status')
+        .setDescription('Gets the status of the server name refresh loop.')
+        .toJSON(),
+    new SlashCommandBuilder()
+        .setName('refresh')
+        .setDescription('Immediately refreshes the server name.')
+        .toJSON()
+]
+
 const clientId = '973385182566580344';
 const rest = new REST({ version: '9' }).setToken(token);
 
@@ -33,12 +36,19 @@ const rest = new REST({ version: '9' }).setToken(token);
     try {
         console.log('Started refreshing application (/) commands.');
 
+        // Register global commands
         await rest.put(
             Routes.applicationCommands(clientId),
-            { body: commands },
+            { body: globalCommands }
         );
 
-        console.log('Successfully reloaded application (/) commands.');
+        // Register server specific commands
+        await rest.put(
+            Routes.applicationGuildCommands(clientId, '859197712426729532'),
+            { body: serverCommands }
+        )
+
+        console.log('Successfully reloaded application and guild (/) commands.');
     } catch (error) {
         console.error(error);
     }
