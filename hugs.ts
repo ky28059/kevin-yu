@@ -139,7 +139,17 @@ const hugGifs = [
     'https://tenor.com/view/love-ponyo-hayao-miyazaki-gake-no-ue-no-ponyo-yuria-nara-gif-5705583',
     'https://tenor.com/view/ponyo-sosuke-hug-hugging-love-gif-4427438',
     'https://tenor.com/view/ghibli-ponyo-cuddle-gif-12132429',
-    'https://tenor.com/view/hug-hugs-and-love-gif-23912006'
+    'https://tenor.com/view/hug-hugs-and-love-gif-23912006',
+    'https://tenor.com/view/cute-iklog-gif-19876983',
+    'https://tenor.com/view/lopelope-gif-18894886',
+    'https://tenor.com/view/peachandgoma-peach-peachwait-peachtext-text-gif-22393987',
+    'https://tenor.com/view/pat-head-gakuen-babysitters-kotarou-anime-cute-gif-17907437',
+    'https://media.discordapp.net/attachments/807043988506279947/996468032102748220/ezgif-2-51a42cf25b.gif',
+    'https://tenor.com/view/good-boy-pat-on-head-stitch-gif-14742401',
+    'https://tenor.com/view/saltobears-squeeze-gif-21180094',
+    'https://tenor.com/view/kotarou-gakuen-babysitters-pat-head-sleepy-gif-11648944',
+    'https://tenor.com/view/pat-cute-anime-kotarou-gif-22996156',
+    'https://tenor.com/view/funny-dog-cat-patting-head-gif-4953911'
 ]
 
 export const maxIndex = hugGifs.length - 1;
