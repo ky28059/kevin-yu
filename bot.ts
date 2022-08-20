@@ -120,7 +120,7 @@ client.on('interactionCreate', async (interaction) => {
             .addField('server name shuffling', 'Every 24 hours, the server name is shuffled randomly between the cool people of this server 🥰. Get the status of the refresh loop with `/status` and immediately trigger a refresh with `/refresh`.')
 
         helpEmbed
-            .addField('wooper wednesday', 'A weekly celebration of wooper wednesday, as one is wont to observe.')
+            .addField('wooper wednesday', 'A weekly celebration of wooper wednesday, as one is wont to observe. You can also use `/woop` to celebrate early!')
             .addField('🫂', 'Use `/hug` to send a random hug gif :D')
 
         await interaction.reply({embeds: [helpEmbed]});
@@ -154,6 +154,24 @@ client.on('interactionCreate', async (interaction) => {
             ]
         });
         await interaction.reply(getHugGif(num));
+    } else if (interaction.commandName === 'woop') {
+        const woops = [
+            'https://tenor.com/view/wooper-wednesday-wooper-wednesday-pokemon-gif-21444101',
+            'https://tenor.com/view/wooper-pokemon-woop-woop-wooper-ethnostate-gif-21864770',
+            'https://tenor.com/view/wooper-pokemon-wooper-ethnostate-woop-woop-gif-21864763',
+            'https://tenor.com/view/marx-2219-meme-wow-yes-gif-22915194',
+            'https://tenor.com/view/pokemon-surprise-fall-oops-that-one-friend-gif-11722586',
+            'https://tenor.com/view/wooper-pokemon-gif-25055346',
+            'https://tenor.com/view/wooper-my-beloved-pokemon-heart-woop-woop-gif-20666113',
+            'https://tenor.com/view/wooper-pokemon-smile-quagsire-gif-20667095',
+            'https://tenor.com/view/mudkip-pokemon-gif-24125499',
+            'https://tenor.com/view/wooper-pokemon-gif-25059358',
+            'https://tenor.com/view/wooper-pokemon-pichu-gif-22614879',
+            'https://tenor.com/view/wooper-swimming-gif-22100413',
+            'https://tenor.com/view/wooper-pokemon-gif-25058363',
+            'https://tenor.com/view/wooper-gif-25140763'
+        ]
+        await interaction.reply(woops[Math.floor(Math.random() * woops.length)]);
     }
 });
 

@@ -11,10 +11,14 @@ const globalCommands = [
         .toJSON(),
     new SlashCommandBuilder()
         .setName('hug')
-        .setDescription('Send a hug!')
+        .setDescription('Send a hug gif!')
         .addIntegerOption(option => option
             .setName('num')
             .setDescription('The hug gif to send. If not specified, this is randomized!'))
+        .toJSON(),
+    new SlashCommandBuilder()
+        .setName('woop')
+        .setDescription('Woop woop!')
         .toJSON()
 ];
 
