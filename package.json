@@ -4,13 +4,13 @@
   "main": "bot.ts",
   "author": "Kevin Yu",
   "dependencies": {
-    "@discordjs/builders": "^0.11.0",
-    "@discordjs/rest": "^0.2.0-canary.0",
+    "@discordjs/builders": "^1.2.0",
+    "@discordjs/rest": "^1.1.0",
     "@types/cron": "^2.0.0",
-    "@types/node": "^14.14.37",
+    "@types/node": "^18.7.13",
     "cron": "^2.0.0",
-    "discord-api-types": "^0.26.1",
-    "discord.js": "^13.1.0",
+    "discord-api-types": "^0.37.5",
+    "discord.js": "^14.3.0",
     "ts-node": "^10.4.0",
     "typescript": "^4.6.4"
   },

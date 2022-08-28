@@ -1,4 +1,4 @@
-import {Client, MessageEmbed, TextChannel} from 'discord.js';
+import {ActivityType, ChannelType, Client, EmbedBuilder, TextChannel} from 'discord.js';
 import {CronJob} from 'cron';
 import {readdirSync} from 'fs';
 import {getHugGif, maxIndex} from './hugs';
@@ -7,13 +7,14 @@ import {token} from './auth';
 
 const client = new Client({
     intents: [
-        "GUILDS",
-        "GUILD_MESSAGES",
-        "GUILD_PRESENCES",
-        "GUILD_MEMBERS",
-        "GUILD_MESSAGE_REACTIONS",
+        "Guilds",
+        "GuildMessages",
+        "GuildPresences",
+        "GuildMembers",
+        "GuildMessageReactions",
+        "MessageContent"
     ],
-    presence: {activities: [{type: 'WATCHING', name: 'y\'all 🥰'}]},
+    presence: {activities: [{type: ActivityType.Watching, name: 'y\'all 🥰'}]},
     allowedMentions: {repliedUser: false}
 });
 
@@ -92,7 +93,7 @@ client.once('ready', async () => {
 
 client.on('messageCreate', async (message) => {
     if (message.author.bot) return;
-    if (message.channel.type === 'DM') return;
+    if (message.channel.type === ChannelType.DM) return;
 
     // Update #chill-perkash channel description automatically
     const match = message.content.match(/^maya "?(.+)"? perkash$/i)?.[1]?.replaceAll('"', '\'');
@@ -107,28 +108,30 @@ client.on('messageCreate', async (message) => {
 });
 
 client.on('interactionCreate', async (interaction) => {
-    if (!interaction.isCommand()) return;
+    if (!interaction.isChatInputCommand()) return;
 
     if (interaction.commandName === 'help') {
-        const helpEmbed = new MessageEmbed()
+        const helpEmbed = new EmbedBuilder()
             .setTitle('kevin yu.')
             .setColor(0xf6b40c)
             .setDescription('It is I! ~~Dio~~ Kevin Yu! This bot occasionally does things. Ping <@355534246439419904> if it breaks.')
 
-        if (interaction.guildId === '859197712426729532') helpEmbed
-            .addField('maya automated perkash', 'All messages matched in the form of `maya [...] perkash` will update the <#956055434173751306> description accordingly. For the curious, the regex used is `/^maya "?(.+)"? perkash$/i`.')
-            .addField('server name shuffling', 'Every 24 hours, the server name is shuffled randomly between the cool people of this server 🥰. Get the status of the refresh loop with `/status` and immediately trigger a refresh with `/refresh`.')
+        if (interaction.guildId === '859197712426729532') helpEmbed.addFields(
+            {name: 'maya automated perkash', value: 'All messages matched in the form of `maya [...] perkash` will update the <#956055434173751306> description accordingly. For the curious, the regex used is `/^maya "?(.+)"? perkash$/i`.'},
+            {name: 'server name shuffling', value: 'Every 24 hours, the server name is shuffled randomly between the cool people of this server 🥰. Get the status of the refresh loop with `/status` and immediately trigger a refresh with `/refresh`.'}
+        );
 
-        helpEmbed
-            .addField('wooper wednesday', 'A weekly celebration of wooper wednesday, as one is wont to observe. You can also use `/woop` to celebrate early!')
-            .addField('🫂', 'Use `/hug` to send a random hug gif :D')
+        helpEmbed.addFields(
+            {name: 'wooper wednesday', value: 'A weekly celebration of wooper wednesday, as one is wont to observe. You can also use `/woop` to celebrate early!'},
+            {name: '🫂', value: 'Use `/hug` to send a random hug gif :D'}
+        );
 
         await interaction.reply({embeds: [helpEmbed]});
     } else if (interaction.commandName === 'status') {
         const lastRunTimestamp = Math.floor(serverUpdateJob.lastDate().valueOf() / 1000);
         const nextRunTimestamp = Math.floor(serverUpdateJob.nextDate().valueOf() / 1000);
 
-        const statusEmbed = new MessageEmbed()
+        const statusEmbed = new EmbedBuilder()
             .setTitle('Server name status')
             .setColor(0xf6b40c)
             .setDescription(`The server name is currently ${formatStatusInfo()}.\n\nThe server was last updated on <t:${lastRunTimestamp}>. The next update is scheduled for <t:${nextRunTimestamp}>, <t:${nextRunTimestamp}:R>.`)
@@ -137,7 +140,7 @@ client.on('interactionCreate', async (interaction) => {
     } else if (interaction.commandName === 'refresh') {
         await updateServerName();
 
-        const successEmbed = new MessageEmbed()
+        const successEmbed = new EmbedBuilder()
             .setTitle('Refresh successful!')
             .setColor(0xf6b40c)
             .setDescription(`The server name is now ${formatStatusInfo()}. The next update is scheduled <t:${Math.floor(serverUpdateJob.nextDate().valueOf() / 1000)}:R>.`)
@@ -146,9 +149,9 @@ client.on('interactionCreate', async (interaction) => {
         await interaction.reply({embeds: [successEmbed]});
     } else if (interaction.commandName === 'hug') {
         const num = interaction.options.getInteger('num');
-        if (num && (num > maxIndex || num < 0)) return interaction.reply({
+        if (num && (num > maxIndex || num < 0)) return void await interaction.reply({
             embeds: [
-                new MessageEmbed()
+                new EmbedBuilder()
                     .setAuthor({name: `Invalid index! Keep indexes between [0, ${maxIndex}].`})
                     .setColor(0xf6b40c)
             ]
