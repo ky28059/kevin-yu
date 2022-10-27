@@ -96,14 +96,22 @@ client.on('messageCreate', async (message) => {
     if (message.channel.type === ChannelType.DM) return;
 
     // Update #chill-perkash channel description automatically
-    const match = message.content.match(/^maya "?(.+)"? perkash$/i)?.[1]?.replaceAll('"', '\'');
-    if (match && message.guildId === '859197712426729532') {
+    const desc = message.content.match(/^maya "?(.+)"? perkash$/i)?.[1]?.replaceAll('"', '\'');
+    if (desc && message.guildId === '859197712426729532') {
         const channel = client.channels.cache.get('956055434173751306');
         if (!channel || !(channel instanceof TextChannel)) return;
 
-        const desc = channel.topic?.match(/maya (.+) perkash/i)?.[1];
-        await channel.setTopic(desc ? `maya ${desc} "${match}" perkash` : `maya "${match}" perkash`);
+        const oldDesc = channel.topic?.match(/maya (.+) perkash/i)?.[1];
+        await channel.setTopic(oldDesc ? `maya ${oldDesc} "${desc}" perkash` : `maya "${desc}" perkash`);
         await message.reply('noted.');
+    }
+
+    // Update Saumya's nickname automatically
+    const nick = message.content.match(/\bI(?:['’]?|\s+a)m\s+(.+)/i)?.[1];
+    if (nick && message.guild?.id === '928554105323016192' && message.author.id === '632281409134002195') {
+        const member = message.guild.members.cache.get('632281409134002195');
+        if (!member) return;
+        await member.setNickname(nick);
     }
 });
 
