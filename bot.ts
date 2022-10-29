@@ -1,7 +1,8 @@
-import {ActivityType, ChannelType, Client, EmbedBuilder, TextChannel} from 'discord.js';
+import {ActivityType, Client, EmbedBuilder, TextChannel} from 'discord.js';
 import {CronJob} from 'cron';
 import {readdirSync} from 'fs';
 import {getHugGif, maxIndex} from './hugs';
+import {truncate} from './util';
 import {token} from './auth';
 
 
@@ -93,11 +94,13 @@ client.once('ready', async () => {
 
 client.on('messageCreate', async (message) => {
     if (message.author.bot) return;
-    if (message.channel.type === ChannelType.DM) return;
+    if (!message.inGuild()) return;
 
     // Update #chill-perkash channel description automatically
-    const desc = message.content.match(/^maya "?(.+)"? perkash$/i)?.[1]?.replaceAll('"', '\'');
-    if (desc && message.guildId === '859197712426729532') {
+    if (message.guild.id === '859197712426729532') {
+        const desc = message.content.match(/^maya "?(.+)"? perkash$/i)?.[1]?.replaceAll('"', '\'');
+        if (!desc) return;
+
         const channel = client.channels.cache.get('956055434173751306');
         if (!channel || !(channel instanceof TextChannel)) return;
 
@@ -107,11 +110,14 @@ client.on('messageCreate', async (message) => {
     }
 
     // Update Saumya's nickname automatically
-    const nick = message.content.match(/\bI(?:['’]?|\s+a)m\s+(.+)/i)?.[1];
-    if (nick && message.guild?.id === '928554105323016192' && message.author.id === '632281409134002195') {
+    if (message.guild.id === '928554105323016192' && message.author.id === '632281409134002195') {
+        const nick = message.content.match(/\bI(?:['’]?|\s+a)m\s+(.+)/i)?.[1];
+        if (!nick) return;
+
         const member = message.guild.members.cache.get('632281409134002195');
         if (!member) return;
-        await member.setNickname(nick);
+
+        await member.setNickname(truncate(nick, 32));
     }
 });
 
