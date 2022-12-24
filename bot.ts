@@ -1,8 +1,8 @@
 import {ActivityType, Client, EmbedBuilder, TextChannel} from 'discord.js';
 import {CronJob} from 'cron';
 import {readdirSync} from 'fs';
-import {getHugGif, maxIndex} from './hugs';
-import {truncate} from './util';
+import {getGif, truncate} from './util';
+import {hugGifs, wooperGifs} from './gifs';
 import {token} from './auth';
 
 
@@ -58,7 +58,7 @@ async function updateServerName() {
 
 // Reminds everyone that it is wooper wednesday!
 async function sendWooperWednesday() {
-    const channels = ['859197712426729535', '928554105323016195'];
+    const channels = ['859197712426729535', '928554105323016195', '617085014001319984'];
 
     for (const id of channels) {
         const channel = client.channels.cache.get(id);
@@ -163,32 +163,16 @@ client.on('interactionCreate', async (interaction) => {
         await interaction.reply({embeds: [successEmbed]});
     } else if (interaction.commandName === 'hug') {
         const num = interaction.options.getInteger('num');
-        if (num && (num > maxIndex || num < 0)) return void await interaction.reply({
+        if (num && (num >= hugGifs.length || num < 0)) return void await interaction.reply({
             embeds: [
                 new EmbedBuilder()
-                    .setAuthor({name: `Invalid index! Keep indexes between [0, ${maxIndex}].`})
+                    .setAuthor({name: `Invalid index! Keep indexes between [0, ${hugGifs.length - 1}].`})
                     .setColor(0xf6b40c)
             ]
         });
-        await interaction.reply(getHugGif(num));
+        await interaction.reply(getGif(hugGifs, num));
     } else if (interaction.commandName === 'woop') {
-        const woops = [
-            'https://tenor.com/view/wooper-wednesday-wooper-wednesday-pokemon-gif-21444101',
-            'https://tenor.com/view/wooper-pokemon-woop-woop-wooper-ethnostate-gif-21864770',
-            'https://tenor.com/view/wooper-pokemon-wooper-ethnostate-woop-woop-gif-21864763',
-            'https://tenor.com/view/marx-2219-meme-wow-yes-gif-22915194',
-            'https://tenor.com/view/pokemon-surprise-fall-oops-that-one-friend-gif-11722586',
-            'https://tenor.com/view/wooper-pokemon-gif-25055346',
-            'https://tenor.com/view/wooper-my-beloved-pokemon-heart-woop-woop-gif-20666113',
-            'https://tenor.com/view/wooper-pokemon-smile-quagsire-gif-20667095',
-            'https://tenor.com/view/mudkip-pokemon-gif-24125499',
-            'https://tenor.com/view/wooper-pokemon-gif-25059358',
-            'https://tenor.com/view/wooper-pokemon-pichu-gif-22614879',
-            'https://tenor.com/view/wooper-swimming-gif-22100413',
-            'https://tenor.com/view/wooper-pokemon-gif-25058363',
-            'https://tenor.com/view/wooper-gif-25140763'
-        ]
-        await interaction.reply(woops[Math.floor(Math.random() * woops.length)]);
+        await interaction.reply(getGif(wooperGifs));
     }
 });
 
@@ -196,4 +180,4 @@ client.on('interactionCreate', async (interaction) => {
 client.on('warn', info => console.log(info));
 client.on('error', error => console.error(error));
 
-client.login(token);
+void client.login(token);

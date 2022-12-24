@@ -1,4 +1,4 @@
-const hugGifs = [
+export const hugGifs = [
     'https://tenor.com/view/cat-gray-cat-white-cat-love-cat-hug-gif-14227403',
     'https://tenor.com/view/cute-cat-cats-couple-love-gif-14214458',
     'https://tenor.com/view/cute-cat-couple-hug-love-gif-14184904',
@@ -182,10 +182,19 @@ const hugGifs = [
     'https://tenor.com/view/ponyo-sosuke-sleeping-napping-asleep-gif-17711361'
 ]
 
-export const maxIndex = hugGifs.length - 1;
-
-// Gets the specified hug gif, or a random one if no number is supplied.
-export function getHugGif(num?: number | null) {
-    const index = num ?? Math.floor(Math.random() * hugGifs.length);
-    return hugGifs[index];
-}
+export const wooperGifs = [
+    'https://tenor.com/view/wooper-wednesday-wooper-wednesday-pokemon-gif-21444101',
+    'https://tenor.com/view/wooper-pokemon-woop-woop-wooper-ethnostate-gif-21864770',
+    'https://tenor.com/view/wooper-pokemon-wooper-ethnostate-woop-woop-gif-21864763',
+    'https://tenor.com/view/marx-2219-meme-wow-yes-gif-22915194',
+    'https://tenor.com/view/pokemon-surprise-fall-oops-that-one-friend-gif-11722586',
+    'https://tenor.com/view/wooper-pokemon-gif-25055346',
+    'https://tenor.com/view/wooper-my-beloved-pokemon-heart-woop-woop-gif-20666113',
+    'https://tenor.com/view/wooper-pokemon-smile-quagsire-gif-20667095',
+    'https://tenor.com/view/mudkip-pokemon-gif-24125499',
+    'https://tenor.com/view/wooper-pokemon-gif-25059358',
+    'https://tenor.com/view/wooper-pokemon-pichu-gif-22614879',
+    'https://tenor.com/view/wooper-swimming-gif-22100413',
+    'https://tenor.com/view/wooper-pokemon-gif-25058363',
+    'https://tenor.com/view/wooper-gif-25140763'
+]
