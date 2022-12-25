@@ -179,7 +179,10 @@ export const hugGifs = [
     'https://tenor.com/view/aww-ponyo-cute-happy-gif-22540260',
     'https://tenor.com/view/studio-ghibli-ponyo-on-the-cliff-ponyo-sosuke-underwater-gif-16517307',
     'https://tenor.com/view/ponyo-gif-22867189',
-    'https://tenor.com/view/ponyo-sosuke-sleeping-napping-asleep-gif-17711361'
+    'https://tenor.com/view/ponyo-sosuke-sleeping-napping-asleep-gif-17711361',
+    'https://tenor.com/view/mochi-cat-peach-chin-cute-gif-25689407',
+    'https://tenor.com/view/chill-cute-cat-caption-gif-gif-25526508',
+    'https://tenor.com/view/%D1%81%D1%87%D0%B0%D1%81%D1%82%D1%8C%D0%B5-gif-23940530'
 ]
 
 export const wooperGifs = [
@@ -196,5 +199,32 @@ export const wooperGifs = [
     'https://tenor.com/view/wooper-pokemon-pichu-gif-22614879',
     'https://tenor.com/view/wooper-swimming-gif-22100413',
     'https://tenor.com/view/wooper-pokemon-gif-25058363',
-    'https://tenor.com/view/wooper-gif-25140763'
+    'https://tenor.com/view/wooper-gif-25140763',
+    'https://tenor.com/view/wooper-pokemon-gif-25059008'
+]
+
+export const ponyoGifs = [
+    'https://tenor.com/view/love-ponyo-hayao-miyazaki-gake-no-ue-no-ponyo-yuria-nara-gif-5705583',
+    'https://tenor.com/view/ponyo-sosuke-hug-hugging-love-gif-4427438',
+    'https://tenor.com/view/ghibli-ponyo-cuddle-gif-12132429',
+    'https://tenor.com/view/ponyo-gif-4743406',
+    'https://tenor.com/view/ponyo-ham-gif-24160824',
+    'https://tenor.com/view/studio-ghibli-anime-gif-22884038',
+    'https://tenor.com/view/poyno-gif-20960035',
+    'https://tenor.com/view/wallpaper-ponyo-cute-kawaii-gif-17317871',
+    'https://tenor.com/view/ponyo-anime-ghibli-curious-looking-gif-5116606',
+    'https://tenor.com/view/sam-samcaccamo-ponyo-pfp-matching-gif-23424098',
+    'https://tenor.com/view/aww-ponyo-cute-happy-gif-22540260',
+    'https://tenor.com/view/studio-ghibli-ponyo-on-the-cliff-ponyo-sosuke-underwater-gif-16517307',
+    'https://tenor.com/view/ponyo-gif-22867189',
+    'https://tenor.com/view/ponyo-sosuke-sleeping-napping-asleep-gif-17711361',
+    'https://tenor.com/view/anime-studio-ghibli-ghibli-movies-ponyo-on-the-cliff-by-the-sea-gif-14850931',
+    'https://tenor.com/view/ponyo-studio-ghibli-gif-19399618',
+    'https://tenor.com/view/ponyo-boop-hayaomiyazaki-cute-silly-gif-4048698',
+    'https://tenor.com/view/yachting-boat-cruise-studio-ghibli-water-gif-5530298',
+    'https://tenor.com/view/sleepy-sleep-ponyo-girl-water-gif-7484538',
+    'https://tenor.com/view/ponyo-flip-happy-yay-woo-gif-5182597',
+    'https://tenor.com/view/ponyo-bite-ham-eating-hungry-gif-11714464',
+    'https://tenor.com/view/fujimoto-gif-26138748',
+    'https://tenor.com/view/ponyo-hayao-miyazaki-ghibli-studio-ghibli-rain-gif-4067659'
 ]

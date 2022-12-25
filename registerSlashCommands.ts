@@ -19,6 +19,10 @@ const globalCommands = [
     new SlashCommandBuilder()
         .setName('woop')
         .setDescription('Woop woop!')
+        .toJSON(),
+    new SlashCommandBuilder()
+        .setName('ponyo')
+        .setDescription('Ponyo loves Sosuke!')
         .toJSON()
 ];
 
@@ -50,7 +54,7 @@ const rest = new REST({ version: '9' }).setToken(token);
         await rest.put(
             Routes.applicationGuildCommands(clientId, '859197712426729532'),
             { body: serverCommands }
-        )
+        );
 
         console.log('Successfully reloaded application and guild (/) commands.');
     } catch (error) {

@@ -2,7 +2,7 @@ import {ActivityType, Client, EmbedBuilder, TextChannel} from 'discord.js';
 import {CronJob} from 'cron';
 import {readdirSync} from 'fs';
 import {getGif, truncate} from './util';
-import {hugGifs, wooperGifs} from './gifs';
+import {hugGifs, ponyoGifs, wooperGifs} from './gifs';
 import {token} from './auth';
 
 
@@ -173,6 +173,8 @@ client.on('interactionCreate', async (interaction) => {
         await interaction.reply(getGif(hugGifs, num));
     } else if (interaction.commandName === 'woop') {
         await interaction.reply(getGif(wooperGifs));
+    } else if (interaction.commandName === 'ponyo') {
+        await interaction.reply(getGif(ponyoGifs));
     }
 });
 
