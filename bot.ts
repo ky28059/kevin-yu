@@ -119,6 +119,14 @@ client.on('messageCreate', async (message) => {
 
         await member.setNickname(truncate(nick, 32));
     }
+
+    // Prefix `ethan` to 3+ letter e-words excluding "ethan"
+    if (message.guild.id === '617085013531295774') {
+        const match = message.content.match(/\be(?!than\b)([bcdfghjklmnpqrstvwxyz]\w+)\b/i)
+        if (!match) return;
+
+        await message.reply(`ethan ${match[1]}`)
+    }
 });
 
 client.on('interactionCreate', async (interaction) => {
