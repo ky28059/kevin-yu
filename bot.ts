@@ -120,9 +120,11 @@ client.on('messageCreate', async (message) => {
         await member.setNickname(truncate(nick, 32));
     }
 
-    // Prefix `ethan` to 3+ letter e-words excluding "ethan"
+    // Prefix `ethan` to allowed e-words (and variations)
+    // Allowed words: esports, ecommerce, emoji/emote/emoticon/emotion, edating, econ, enormous, egregious, evade,
+    // eject, edragon, ebarbs
     if (message.guild.id === '617085013531295774') {
-        const match = message.content.match(/\be(?!than\b)([bcdfghjklmnpqrstvwxyz]\w+)\b/i)
+        const match = message.content.match(/\be(sports?|commerce|mo(?:ji|te|ticon|tion(?:ally)?)s?|dat(?:es?|ing)|con(?:omic(?:s|al(?:ly)?)?)?|norm(?:ous(?:ly)?|ity)|gregious(?:ly)?|va(?:de[sd]?|sions?)|ject(?:ed|ion|ing)?s?|drag(?:on)?s?|barb(?:arian)?s?)\b/i)
         if (!match) return;
 
         await message.reply(`ethan ${match[1]}`)
