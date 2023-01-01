@@ -122,9 +122,9 @@ client.on('messageCreate', async (message) => {
 
     // Prefix `ethan` to allowed e-words (and variations)
     // Allowed words: esports, ecommerce, emoji/emote/emoticon/emotion, edating, econ, enormous, egregious, evade,
-    // eject, edragon, ebarbs
+    // eject, edragon, ebarbs, egads, egirl
     if (message.guild.id === '617085013531295774') {
-        const match = message.content.match(/\be(sports?|commerce|mo(?:ji|te|ticon|tion(?:ally)?)s?|dat(?:es?|ing)|con(?:omic(?:s|al(?:ly)?)?)?|norm(?:ous(?:ly)?|ity)|gregious(?:ly)?|va(?:de[sd]?|sions?)|ject(?:ed|ion|ing)?s?|drag(?:on)?s?|barb(?:arian)?s?)\b/i)
+        const match = message.content.match(/\be(sports?|commerce|mo(?:ji|te|ticon|tion(?:ally)?)s?|dat(?:es?|ing)|con(?:omic(?:s|al(?:ly)?)?)?|norm(?:ous(?:ly)?|ity)|gregious(?:ly)?|va(?:de[sd]?|sions?)|ject(?:ed|ion|ing)?s?|drag(?:on)?s?|barb(?:arian)?s?|gads|girls?)\b/i)
         if (!match) return;
 
         await message.reply(`ethan ${match[1]}`)
