@@ -73,8 +73,10 @@ function formatStatusInfo() {
     return `**${name}**, using icon \`${iconName}\` (${iconNumber}/${totalIcons})`;
 }
 
+// Allowed words: esports, email, egads, event, ecommerce, emoji/emote/emoticon/emotion, edating, egirl, econ, enum,
+// enumerate, enormous, egregious, eventual, evade, eject, edragon, ebarbs
+const ethanRegex = /\be(sports?|mail(?:s|ed|ing)?|gads|vent(?:s|ful)?|commerce|mo(?:ji|te|ticon|tion(?:ally)?)s?|dat(?:e[sd]?|ing)|girls?|con(?:omic(?:s|al(?:ly)?)?)?|nums?|numera(?:t(?:e[sd]?|ing)|ble)|norm(?:ous(?:ly)?|ity)|gregious(?:ly)?|ventual(?:ly)?|va(?:de[sd]?|sions?)|ject(?:ed|ion|ing)?s?|drag(?:on)?s?|barb(?:arian)?s?)\b/i
 const perkashRegex = /^maya "?(.+)"? perkash$/i
-const ethanRegex = /\be(sports?|commerce|mo(?:ji|te|ticon|tion(?:ally)?)s?|dat(?:es?|ing)|con(?:omic(?:s|al(?:ly)?)?)?|norm(?:ous(?:ly)?|ity)|gregious(?:ly)?|va(?:de[sd]?|sions?)|ject(?:ed|ion|ing)?s?|drag(?:on)?s?|barb(?:arian)?s?|gads|girls?)\b/i
 
 client.once('ready', async () => {
     console.log(`Logged in as ${client.user?.tag}!`);
@@ -124,13 +126,11 @@ client.on('messageCreate', async (message) => {
     }
 
     // Prefix `ethan` to allowed e-words (and variations)
-    // Allowed words: esports, ecommerce, emoji/emote/emoticon/emotion, edating, econ, enormous, egregious, evade,
-    // eject, edragon, ebarbs, egads, egirl
     if (message.guild.id === '617085013531295774') {
         const match = message.content.match(ethanRegex)
         if (!match) return;
 
-        await message.reply(`ethan ${match[1]}`)
+        await message.reply(`> ethan ${match[1]}`)
     }
 });
 
