@@ -73,6 +73,9 @@ function formatStatusInfo() {
     return `**${name}**, using icon \`${iconName}\` (${iconNumber}/${totalIcons})`;
 }
 
+const perkashRegex = /^maya "?(.+)"? perkash$/i
+const ethanRegex = /\be(sports?|commerce|mo(?:ji|te|ticon|tion(?:ally)?)s?|dat(?:es?|ing)|con(?:omic(?:s|al(?:ly)?)?)?|norm(?:ous(?:ly)?|ity)|gregious(?:ly)?|va(?:de[sd]?|sions?)|ject(?:ed|ion|ing)?s?|drag(?:on)?s?|barb(?:arian)?s?|gads|girls?)\b/i
+
 client.once('ready', async () => {
     console.log(`Logged in as ${client.user?.tag}!`);
 
@@ -98,7 +101,7 @@ client.on('messageCreate', async (message) => {
 
     // Update #chill-perkash channel description automatically
     if (message.guild.id === '859197712426729532') {
-        const desc = message.content.match(/^maya "?(.+)"? perkash$/i)?.[1]?.replaceAll('"', '\'');
+        const desc = message.content.match(perkashRegex)?.[1]?.replaceAll('"', '\'');
         if (!desc) return;
 
         const channel = client.channels.cache.get('956055434173751306');
@@ -124,7 +127,7 @@ client.on('messageCreate', async (message) => {
     // Allowed words: esports, ecommerce, emoji/emote/emoticon/emotion, edating, econ, enormous, egregious, evade,
     // eject, edragon, ebarbs, egads, egirl
     if (message.guild.id === '617085013531295774') {
-        const match = message.content.match(/\be(sports?|commerce|mo(?:ji|te|ticon|tion(?:ally)?)s?|dat(?:es?|ing)|con(?:omic(?:s|al(?:ly)?)?)?|norm(?:ous(?:ly)?|ity)|gregious(?:ly)?|va(?:de[sd]?|sions?)|ject(?:ed|ion|ing)?s?|drag(?:on)?s?|barb(?:arian)?s?|gads|girls?)\b/i)
+        const match = message.content.match(ethanRegex)
         if (!match) return;
 
         await message.reply(`ethan ${match[1]}`)
@@ -141,8 +144,12 @@ client.on('interactionCreate', async (interaction) => {
             .setDescription('It is I! ~~Dio~~ Kevin Yu! This bot occasionally does things. Ping <@355534246439419904> if it breaks.')
 
         if (interaction.guildId === '859197712426729532') helpEmbed.addFields(
-            {name: 'maya automated perkash', value: 'All messages matched in the form of `maya [...] perkash` will update the <#956055434173751306> description accordingly. For the curious, the regex used is `/^maya "?(.+)"? perkash$/i`.'},
+            {name: 'maya automated perkash', value: `All messages matched in the form of \`maya [...] perkash\` will update the <#956055434173751306> description accordingly. For the curious, the regex used is \`${perkashRegex}\`.`},
             {name: 'server name shuffling', value: 'Every 24 hours, the server name is shuffled randomly between the cool people of this server 🥰. Get the status of the refresh loop with `/status` and immediately trigger a refresh with `/refresh`.'}
+        );
+
+        if (interaction.guildId === '617085013531295774') helpEmbed.addFields(
+            {name: 'ethan gads!', value: `Kevin Yu will prefix "ethan" to allowed e-words. For the curious, the regex used is: \`\`\`\n${ethanRegex}\n\`\`\``}
         );
 
         helpEmbed.addFields(
