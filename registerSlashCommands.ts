@@ -23,6 +23,10 @@ const globalCommands = [
     new SlashCommandBuilder()
         .setName('ponyo')
         .setDescription('Ponyo loves Sosuke!')
+        .toJSON(),
+    new SlashCommandBuilder()
+        .setName('shrimple')
+        .setDescription('Show how shrimple (or clampicated) something is.')
         .toJSON()
 ];
 

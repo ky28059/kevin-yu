@@ -228,3 +228,16 @@ export const ponyoGifs = [
     'https://tenor.com/view/fujimoto-gif-26138748',
     'https://tenor.com/view/ponyo-hayao-miyazaki-ghibli-studio-ghibli-rain-gif-4067659'
 ]
+
+export const shrimpleGifs = [
+    'https://tenor.com/view/shrimp-as-that-clash-royale-hee-hee-hee-haw-gif-25054781',
+    'https://tenor.com/view/not-so-shrimple-now-shrimple-gif-25946993',
+    'https://tenor.com/view/its-as-shrimple-as-that-shrimple-clam-grass-jump-gif-25956447',
+    'https://tenor.com/view/its-as-shrimple-as-that-shrimple-simply-mantastic-mantastic-manta-ray-gif-26542779',
+    'https://tenor.com/view/krill-issue-skill-issue-krill-issue-gif-25572478',
+    'https://tenor.com/view/youve-got-to-be-squidding-me-its-as-shrimple-as-that-shrimple-squid-gif-26786461',
+    'https://tenor.com/view/benefishial-beneficial-shrimple-grouper-clamplicated-gif-26440220',
+    'https://tenor.com/view/its-not-something-you-cod-achieve-easily-cod-shrimple-fish-gif-26573464',
+    'https://tenor.com/view/its-kinda-conchfusing-conchfusing-its-as-shrimple-as-that-shrimple-its-actually-very-clampicated-gif-26109078'
+    // https://tenor.com/view/your-octopinion-is-invalid-its-as-shrimple-as-that-its-kind-of-conchfusing-actually-its-very-clampicated-gif-26280918
+]

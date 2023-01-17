@@ -2,7 +2,7 @@ import {ActivityType, Client, EmbedBuilder, TextChannel} from 'discord.js';
 import {CronJob} from 'cron';
 import {readdirSync} from 'fs';
 import {getGif, truncate} from './util';
-import {hugGifs, ponyoGifs, wooperGifs} from './gifs';
+import {hugGifs, ponyoGifs, shrimpleGifs, wooperGifs} from './gifs';
 import {token} from './auth';
 
 
@@ -74,8 +74,8 @@ function formatStatusInfo() {
 }
 
 // Allowed words: esports, email, egads, event, ecommerce, emoji/emote/emoticon/emotion, edating, egirl, econ, enum,
-// enumerate, enormous, egregious, eventual, evade, eject, edragon, ebarbs
-const ethanRegex = /\be(sports?|mail(?:s|ed|ing)?|gads|vent(?:s|ful)?|commerce|mo(?:ji|te|ticon|tion(?:ally)?)s?|dat(?:e[sd]?|ing)|girls?|con(?:omic(?:s|al(?:ly)?)?)?|nums?|numera(?:t(?:e[sd]?|ing)|ble)|norm(?:ous(?:ly)?|ity)|gregious(?:ly)?|ventual(?:ly)?|va(?:de[sd]?|sions?)|ject(?:ed|ion|ing)?s?|drag(?:on)?s?|barb(?:arian)?s?)\b/i
+// elite, erase, eraser, epoch, enumerate, enormous, egregious, eventual, evade, eject, edragon, ebarbs
+const ethanRegex = /\be(sports?|mail(?:s|ed|ing)?|gads|vent(?:s|ful)?|commerce|mo(?:ji|te|ticon|tion(?:ally)?)s?|dat(?:e[sd]?|ing)|girls?|con(?:omic(?:s|al(?:ly)?)?)?|nums?|lit(?:e|ist)s?|ras(?:e[sd]?|ing)|rasers?|pochs?|numera(?:t(?:e[sd]?|ing)|ble)|norm(?:ous(?:ly)?|ity)|gregious(?:ly)?|ventual(?:ly)?|va(?:de[sd]?|sions?)|ject(?:ed|ion|ing)?s?|drag(?:on)?s?|barb(?:arian)?s?)\b/i
 const perkashRegex = /^maya "?(.+)"? perkash$/i
 
 client.once('ready', async () => {
@@ -154,7 +154,8 @@ client.on('interactionCreate', async (interaction) => {
 
         helpEmbed.addFields(
             {name: 'wooper wednesday', value: 'A weekly celebration of wooper wednesday, as one is wont to observe. You can also use `/woop` to celebrate early!'},
-            {name: '🫂', value: 'Use `/hug` to send a random hug gif :D'}
+            {name: '🫂', value: 'Use `/hug` to send a random hug gif :D'},
+            {name: '🦐', value: 'Use `/shrimple` to show how shrimple (or clampicated) something is.'}
         );
 
         await interaction.reply({embeds: [helpEmbed]});
@@ -192,6 +193,8 @@ client.on('interactionCreate', async (interaction) => {
         await interaction.reply(getGif(wooperGifs));
     } else if (interaction.commandName === 'ponyo') {
         await interaction.reply(getGif(ponyoGifs));
+    } else if (interaction.commandName === 'shrimple') {
+        await interaction.reply(getGif(shrimpleGifs));
     }
 });
 
