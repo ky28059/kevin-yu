@@ -200,7 +200,10 @@ export const wooperGifs = [
     'https://tenor.com/view/wooper-swimming-gif-22100413',
     'https://tenor.com/view/wooper-pokemon-gif-25058363',
     'https://tenor.com/view/wooper-gif-25140763',
-    'https://tenor.com/view/wooper-pokemon-gif-25059008'
+    'https://tenor.com/view/wooper-pokemon-gif-25059008',
+    'https://tenor.com/view/pokemon-teddiursa-wooper-smoochum-pichu-gif-24858089',
+    'https://tenor.com/view/wooper-roller-skates-wooper-roller-skate-skating-wooper-wooper-skating-gif-27228338',
+    'https://tenor.com/view/wooper-gif-27280303'
 ]
 
 export const ponyoGifs = [
