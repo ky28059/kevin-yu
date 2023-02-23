@@ -29,6 +29,7 @@ let statusInfo: ServerStatusInfo;
 
 let serverUpdateJob: CronJob;
 let wooperWednesdayJob: CronJob;
+let endWooperWednesdayJob: CronJob;
 
 
 // Randomizes the server name and icon
@@ -57,13 +58,19 @@ async function updateServerName() {
 }
 
 // Reminds everyone that it is wooper wednesday!
+const channels = ['859197712426729535', '928554105323016195', '617085014001319984'];
 async function sendWooperWednesday() {
-    const channels = ['859197712426729535', '928554105323016195', '617085014001319984'];
-
     for (const id of channels) {
         const channel = client.channels.cache.get(id);
         if (!channel || !(channel instanceof TextChannel)) continue;
         await channel.send('https://tenor.com/view/wooper-wednesday-wooper-wednesday-pokemon-gif-21444101');
+    }
+}
+async function endWooperWednesday() {
+    for (const id of channels) {
+        const channel = client.channels.cache.get(id);
+        if (!channel || !(channel instanceof TextChannel)) continue;
+        await channel.send('https://tenor.com/view/wooper-gif-27280303');
     }
 }
 
@@ -92,6 +99,12 @@ client.once('ready', async () => {
     wooperWednesdayJob = new CronJob({
         cronTime: '0 0 * * Wed',
         onTick: sendWooperWednesday,
+        start: true,
+        timeZone: 'America/Los_Angeles'
+    });
+    endWooperWednesdayJob = new CronJob({
+        cronTime: '0 0 * * Thu',
+        onTick: endWooperWednesday,
         start: true,
         timeZone: 'America/Los_Angeles'
     });
