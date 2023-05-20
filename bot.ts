@@ -58,7 +58,7 @@ async function updateServerName() {
 }
 
 // Reminds everyone that it is wooper wednesday!
-const channels = ['859197712426729535', '928554105323016195', '617085014001319984'];
+const channels = ['859197712426729535', '928554105323016195', '617085014001319984', '1107748377631936703'];
 async function sendWooperWednesday() {
     for (const id of channels) {
         const channel = client.channels.cache.get(id);
@@ -80,9 +80,10 @@ function formatStatusInfo() {
     return `**${name}**, using icon \`${iconName}\` (${iconNumber}/${totalIcons})`;
 }
 
-// Allowed words: esports, email, egads, event, ecommerce, emoji/emote/emoticon/emotion, edating, egirl, econ, enum,
+// Allowed words: esports, egads, eventful, ecommerce, emoji/emote/emoticon/emotion, edating, egirl, econ, enum,
 // elite, erase, eraser, epoch, enumerate, enormous, egregious, eventual, evade, eject, edragon, ebarbs
-const ethanRegex = /\be(sports?|mail(?:s|ed|ing)?|gads|vent(?:s|ful)?|commerce|mo(?:ji|te|ticon|tion(?:ally)?)s?|dat(?:e[sd]?|ing)|girls?|con(?:omic(?:s|al(?:ly)?)?)?|nums?|lit(?:e|ist)s?|ras(?:e[sd]?|ing)|rasers?|pochs?|numera(?:t(?:e[sd]?|ing)|ble)|norm(?:ous(?:ly)?|ity)|gregious(?:ly)?|ventual(?:ly)?|va(?:de[sd]?|sions?)|ject(?:ed|ion|ing)?s?|drag(?:on)?s?|barb(?:arian)?s?)\b/i
+// Removed patterns: mail(?:s|ed|ing)?, vents?
+const ethanRegex = /\be(sports?|gads|ventful|commerce|mo(?:ji|te|ticon|tion(?:ally)?)s?|dat(?:e[sd]?|ing)|girls?|con(?:omic(?:s|al(?:ly)?)?)?|nums?|lit(?:e|ist)s?|ras(?:e[sd]?|ing)|rasers?|pochs?|numera(?:t(?:e[sd]?|ing)|ble)|norm(?:ous(?:ly)?|ity)|gregious(?:ly)?|ventual(?:ly)?|va(?:de[sd]?|sions?)|ject(?:ed|ion|ing)?s?|drag(?:on)?s?|barb(?:arian)?s?)\b/i
 const perkashRegex = /^maya "?(.+)"? perkash$/i
 
 client.once('ready', async () => {
