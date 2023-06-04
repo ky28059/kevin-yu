@@ -182,7 +182,27 @@ export const hugGifs = [
     'https://tenor.com/view/ponyo-sosuke-sleeping-napping-asleep-gif-17711361',
     'https://tenor.com/view/mochi-cat-peach-chin-cute-gif-25689407',
     'https://tenor.com/view/chill-cute-cat-caption-gif-gif-25526508',
-    'https://tenor.com/view/%D1%81%D1%87%D0%B0%D1%81%D1%82%D1%8C%D0%B5-gif-23940530'
+    'https://tenor.com/view/%D1%81%D1%87%D0%B0%D1%81%D1%82%D1%8C%D0%B5-gif-23940530',
+    'https://tenor.com/view/cat-sleep-gif-23970142',
+    'https://tenor.com/view/tkthao219-bubududu-panda-gif-22124396',
+    'https://tenor.com/view/pokemon-gif-27177646',
+    'https://tenor.com/view/clodsire-pokemon-scarlet-and-violet-pokemon-pokemon-pop-pokemon-memes-gif-27380188',
+    'https://tenor.com/view/clodsire-pokemon-scarlet-and-violet-pokemon-scarlet-and-violet-singing-gif-27396195',
+    'https://tenor.com/view/cute-bear-gif-21974949',
+    'https://tenor.com/view/tkthao219-bubududu-panda-gif-22124394',
+    'https://tenor.com/view/kiss-otter-otter-love-gif-25839171',
+    'https://tenor.com/view/otter-cute-mako-dancing-otter-dance-gif-20860529',
+    'https://tenor.com/view/otter-excited-otter-gif-26420853',
+    'https://tenor.com/view/otter-shock-otters-wow-wtf-gif-24606115',
+    'https://tenor.com/view/otter-sleeping-sleep-otter-sleep-sleepy-otter-gif-25017242',
+    'https://tenor.com/view/otter-cute-gif-18081789',
+    'https://tenor.com/view/otter-otter-aty-petting-squish-gif-26523506',
+    'https://tenor.com/view/otter-gif-24469311',
+    'https://tenor.com/view/otter-slam-dunk-cute-win-gif-8932419',
+    'https://tenor.com/view/shook-otter-funny-animals-get-otter-here-shocked-gif-11113562',
+    'https://tenor.com/view/otter-otters-nutria-gif-25748318',
+    'https://tenor.com/view/otter-shock-gif-24438775',
+    'https://tenor.com/view/duck-ducking-hit-gif-21207411'
 ]
 
 export const wooperGifs = [
@@ -243,4 +263,19 @@ export const shrimpleGifs = [
     'https://tenor.com/view/its-not-something-you-cod-achieve-easily-cod-shrimple-fish-gif-26573464',
     'https://tenor.com/view/its-kinda-conchfusing-conchfusing-its-as-shrimple-as-that-shrimple-its-actually-very-clampicated-gif-26109078'
     // https://tenor.com/view/your-octopinion-is-invalid-its-as-shrimple-as-that-its-kind-of-conchfusing-actually-its-very-clampicated-gif-26280918
+]
+
+export const otterGifs = [
+    'https://tenor.com/view/kiss-otter-otter-love-gif-25839171',
+    'https://tenor.com/view/otter-cute-mako-dancing-otter-dance-gif-20860529',
+    'https://tenor.com/view/otter-excited-otter-gif-26420853',
+    'https://tenor.com/view/otter-shock-otters-wow-wtf-gif-24606115',
+    'https://tenor.com/view/otter-sleeping-sleep-otter-sleep-sleepy-otter-gif-25017242',
+    'https://tenor.com/view/otter-cute-gif-18081789',
+    'https://tenor.com/view/otter-otter-aty-petting-squish-gif-26523506',
+    'https://tenor.com/view/otter-gif-24469311',
+    'https://tenor.com/view/otter-slam-dunk-cute-win-gif-8932419',
+    'https://tenor.com/view/shook-otter-funny-animals-get-otter-here-shocked-gif-11113562',
+    'https://tenor.com/view/otter-otters-nutria-gif-25748318',
+    'https://tenor.com/view/otter-shock-gif-24438775'
 ]

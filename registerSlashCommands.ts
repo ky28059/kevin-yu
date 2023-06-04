@@ -27,6 +27,10 @@ const globalCommands = [
     new SlashCommandBuilder()
         .setName('shrimple')
         .setDescription('Show how shrimple (or clampicated) something is.')
+        .toJSON(),
+    new SlashCommandBuilder()
+        .setName('otter')
+        .setDescription('Man...')
         .toJSON()
 ];
 

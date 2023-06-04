@@ -2,7 +2,7 @@ import {ActivityType, Client, EmbedBuilder, TextChannel} from 'discord.js';
 import {CronJob} from 'cron';
 import {readdirSync} from 'fs';
 import {getGif, truncate} from './util';
-import {hugGifs, ponyoGifs, shrimpleGifs, wooperGifs} from './gifs';
+import {hugGifs, otterGifs, ponyoGifs, shrimpleGifs, wooperGifs} from './gifs';
 import {token} from './auth';
 
 
@@ -209,6 +209,8 @@ client.on('interactionCreate', async (interaction) => {
         await interaction.reply(getGif(ponyoGifs));
     } else if (interaction.commandName === 'shrimple') {
         await interaction.reply(getGif(shrimpleGifs));
+    } else if (interaction.commandName === 'otter') {
+        await interaction.reply(getGif(otterGifs));
     }
 });
 
