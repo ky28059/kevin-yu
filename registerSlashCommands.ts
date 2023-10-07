@@ -31,6 +31,10 @@ const globalCommands = [
     new SlashCommandBuilder()
         .setName('otter')
         .setDescription('Man...')
+        .toJSON(),
+    new SlashCommandBuilder()
+        .setName('this-fish')
+        .setDescription('Repost this fish')
         .toJSON()
 ];
 

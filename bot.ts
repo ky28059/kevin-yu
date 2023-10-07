@@ -2,7 +2,7 @@ import {ActivityType, Client, EmbedBuilder, TextChannel} from 'discord.js';
 import {CronJob} from 'cron';
 import {readdirSync} from 'fs';
 import {getGif, truncate} from './util';
-import {hugGifs, otterGifs, ponyoGifs, shrimpleGifs, wooperGifs} from './gifs';
+import {hugGifs, otterGifs, ponyoGifs, shrimpleGifs, thisFishGifs, wooperGifs} from './gifs';
 import {token} from './auth';
 
 
@@ -62,14 +62,14 @@ const channels = ['859197712426729535', '928554105323016195', '61708501400131998
 async function sendWooperWednesday() {
     for (const id of channels) {
         const channel = client.channels.cache.get(id);
-        if (!channel || !(channel instanceof TextChannel)) continue;
+        if (!channel || !channel.isTextBased()) continue;
         await channel.send('https://tenor.com/view/wooper-wednesday-wooper-wednesday-pokemon-gif-21444101');
     }
 }
 async function endWooperWednesday() {
     for (const id of channels) {
         const channel = client.channels.cache.get(id);
-        if (!channel || !(channel instanceof TextChannel)) continue;
+        if (!channel || !channel.isTextBased()) continue;
         await channel.send('https://tenor.com/view/wooper-gif-27280303');
     }
 }
@@ -146,6 +146,11 @@ client.on('messageCreate', async (message) => {
 
         await message.reply(`> ethan ${match[1]}`)
     }
+
+    // Repost this fish
+    if (message.content.includes('this fish')) {
+        await message.reply(getGif(thisFishGifs));
+    }
 });
 
 client.on('interactionCreate', async (interaction) => {
@@ -169,7 +174,8 @@ client.on('interactionCreate', async (interaction) => {
         helpEmbed.addFields(
             {name: 'wooper wednesday', value: 'A weekly celebration of wooper wednesday, as one is wont to observe. You can also use `/woop` to celebrate early!'},
             {name: '🫂', value: 'Use `/hug` to send a random hug gif :D'},
-            {name: '🦐', value: 'Use `/shrimple` to show how shrimple (or clampicated) something is.'}
+            {name: '🦐', value: 'Use `/shrimple` to show how shrimple (or clampicated) something is.'},
+            {name: '🦦', value: 'Use `/otter` to send a random otter gif 🦦'}
         );
 
         await interaction.reply({embeds: [helpEmbed]});
@@ -211,6 +217,8 @@ client.on('interactionCreate', async (interaction) => {
         await interaction.reply(getGif(shrimpleGifs));
     } else if (interaction.commandName === 'otter') {
         await interaction.reply(getGif(otterGifs));
+    } else if (interaction.commandName === 'this-fish') {
+        await interaction.reply(getGif(thisFishGifs));
     }
 });
 

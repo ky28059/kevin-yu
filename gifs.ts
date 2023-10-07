@@ -208,7 +208,9 @@ export const hugGifs = [
     'https://tenor.com/view/kitty-cat-sandwich-cats-sandwich-gif-26112528',
     'https://tenor.com/view/pokemon-pok%C3%A9mon-wooper-jump-around-the-world-gif-9105693827883556990',
     'https://tenor.com/view/quagsire-quagy-quagsire-quagsire-cheer-gif-18674387',
-    'https://tenor.com/view/orange-kitten-orange-cat-cat-waddling-cat-waddle-waddling-kitten-gif-26256461'
+    'https://tenor.com/view/orange-kitten-orange-cat-cat-waddling-cat-waddle-waddling-kitten-gif-26256461',
+    'https://tenor.com/view/pokemon-quagsire-poker-face-pokemon-meme-gif-25436334',
+    'https://tenor.com/view/quagsirea-gif-26469956'
 ]
 
 export const wooperGifs = [
@@ -231,7 +233,9 @@ export const wooperGifs = [
     'https://tenor.com/view/wooper-roller-skates-wooper-roller-skate-skating-wooper-wooper-skating-gif-27228338',
     'https://tenor.com/view/wooper-gif-27280303',
     'https://tenor.com/view/pokemon-pok%C3%A9mon-wooper-jump-around-the-world-gif-9105693827883556990',
-    'https://tenor.com/view/quagsire-quagy-quagsire-quagsire-cheer-gif-18674387'
+    'https://tenor.com/view/quagsire-quagy-quagsire-quagsire-cheer-gif-18674387',
+    'https://tenor.com/view/pokemon-quagsire-poker-face-pokemon-meme-gif-25436334',
+    'https://tenor.com/view/quagsirea-gif-26469956'
 ]
 
 export const ponyoGifs = [
@@ -286,4 +290,11 @@ export const otterGifs = [
     'https://tenor.com/view/shook-otter-funny-animals-get-otter-here-shocked-gif-11113562',
     'https://tenor.com/view/otter-otters-nutria-gif-25748318',
     'https://tenor.com/view/otter-shock-gif-24438775'
+]
+
+export const thisFishGifs = [
+    'https://media.discordapp.net/attachments/1107748377631936703/1151554784122372178/makesweet-jsm0uw.gif',
+    'https://media.discordapp.net/attachments/950102545571913814/1152689716831989830/makesweet-h1q00d.gif',
+    'https://media.discordapp.net/attachments/950102545571913814/1152689836206063826/makesweet-174pd4.gif',
+    'https://media.discordapp.net/attachments/950102545571913814/1152690074161520681/makesweet-yjpa03.gif'
 ]
