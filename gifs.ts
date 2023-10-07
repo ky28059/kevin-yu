@@ -202,7 +202,13 @@ export const hugGifs = [
     'https://tenor.com/view/shook-otter-funny-animals-get-otter-here-shocked-gif-11113562',
     'https://tenor.com/view/otter-otters-nutria-gif-25748318',
     'https://tenor.com/view/otter-shock-gif-24438775',
-    'https://tenor.com/view/duck-ducking-hit-gif-21207411'
+    'https://tenor.com/view/duck-ducking-hit-gif-21207411',
+    'https://tenor.com/view/funny-gif-22740534',
+    'https://media.discordapp.net/attachments/837317430576807977/862507112189132810/image0.gif',
+    'https://tenor.com/view/kitty-cat-sandwich-cats-sandwich-gif-26112528',
+    'https://tenor.com/view/pokemon-pok%C3%A9mon-wooper-jump-around-the-world-gif-9105693827883556990',
+    'https://tenor.com/view/quagsire-quagy-quagsire-quagsire-cheer-gif-18674387',
+    'https://tenor.com/view/orange-kitten-orange-cat-cat-waddling-cat-waddle-waddling-kitten-gif-26256461'
 ]
 
 export const wooperGifs = [
@@ -223,7 +229,9 @@ export const wooperGifs = [
     'https://tenor.com/view/wooper-pokemon-gif-25059008',
     'https://tenor.com/view/pokemon-teddiursa-wooper-smoochum-pichu-gif-24858089',
     'https://tenor.com/view/wooper-roller-skates-wooper-roller-skate-skating-wooper-wooper-skating-gif-27228338',
-    'https://tenor.com/view/wooper-gif-27280303'
+    'https://tenor.com/view/wooper-gif-27280303',
+    'https://tenor.com/view/pokemon-pok%C3%A9mon-wooper-jump-around-the-world-gif-9105693827883556990',
+    'https://tenor.com/view/quagsire-quagy-quagsire-quagsire-cheer-gif-18674387'
 ]
 
 export const ponyoGifs = [
