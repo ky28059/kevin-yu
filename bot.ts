@@ -27,9 +27,10 @@ type ServerStatusInfo = {
 }
 let statusInfo: ServerStatusInfo;
 
-let serverUpdateJob: CronJob;
-let wooperWednesdayJob: CronJob;
-let endWooperWednesdayJob: CronJob;
+let serverUpdateJob: CronJob<null, null>;
+let wooperWednesdayJob: CronJob<null, null>;
+let endWooperWednesdayJob: CronJob<null, null>;
+let postThisCatJob: CronJob<null, null>;
 
 
 // Randomizes the server name and icon
@@ -62,15 +63,22 @@ const channels = ['859197712426729535', '928554105323016195', '61708501400131998
 async function sendWooperWednesday() {
     for (const id of channels) {
         const channel = client.channels.cache.get(id);
-        if (!channel || !channel.isTextBased()) continue;
+        if (!channel?.isTextBased()) continue;
         await channel.send('https://tenor.com/view/wooper-wednesday-wooper-wednesday-pokemon-gif-21444101');
     }
 }
 async function endWooperWednesday() {
     for (const id of channels) {
         const channel = client.channels.cache.get(id);
-        if (!channel || !channel.isTextBased()) continue;
+        if (!channel?.isTextBased()) continue;
         await channel.send('https://tenor.com/view/wooper-gif-27280303');
+    }
+}
+async function postThisCat() {
+    for (const id of channels) {
+        const channel = client.channels.cache.get(id);
+        if (!channel?.isTextBased()) continue;
+        await channel.send('https://tenor.com/view/cat-kitty-pussycat-feline-gif-26001328');
     }
 }
 
@@ -90,24 +98,30 @@ client.once('ready', async () => {
     console.log(`Logged in as ${client.user?.tag}!`);
 
     // Start the server update and wooper wednesday cron jobs
-    serverUpdateJob = new CronJob({
-        cronTime: '0 0 * * *',
+    serverUpdateJob = CronJob.from({
+        cronTime: '0 0 0 * * *',
         onTick: updateServerName,
         start: true,
-        timeZone: 'America/Los_Angeles',
+        timeZone: 'America/Indiana/Indianapolis',
         runOnInit: true
     });
-    wooperWednesdayJob = new CronJob({
-        cronTime: '0 0 * * Wed',
+    wooperWednesdayJob = CronJob.from({
+        cronTime: '0 0 0 * * Wed',
         onTick: sendWooperWednesday,
         start: true,
-        timeZone: 'America/Los_Angeles'
+        timeZone: 'America/Indiana/Indianapolis'
     });
-    endWooperWednesdayJob = new CronJob({
-        cronTime: '0 0 * * Thu',
+    endWooperWednesdayJob = CronJob.from({
+        cronTime: '0 0 0 * * Thu',
         onTick: endWooperWednesday,
         start: true,
-        timeZone: 'America/Los_Angeles'
+        timeZone: 'America/Indiana/Indianapolis'
+    });
+    postThisCatJob = CronJob.from({
+        cronTime: '0 0 0 19 * *',
+        onTick: postThisCat,
+        start: true,
+        timeZone: 'America/Indiana/Indianapolis'
     });
 });
 
@@ -180,7 +194,7 @@ client.on('interactionCreate', async (interaction) => {
 
         await interaction.reply({embeds: [helpEmbed]});
     } else if (interaction.commandName === 'status') {
-        const lastRunTimestamp = Math.floor(serverUpdateJob.lastDate().valueOf() / 1000);
+        const lastRunTimestamp = Math.floor(serverUpdateJob.lastDate()!.valueOf() / 1000);
         const nextRunTimestamp = Math.floor(serverUpdateJob.nextDate().valueOf() / 1000);
 
         const statusEmbed = new EmbedBuilder()
