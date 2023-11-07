@@ -59,7 +59,9 @@ async function updateServerName() {
 }
 
 // Reminds everyone that it is wooper wednesday!
-const channels = ['859197712426729535', '928554105323016195', '617085014001319984', '1107748377631936703'];
+const channels = [
+    '859197712426729535', '928554105323016195', '617085014001319984', '1107748377631936703', '700559787972362260'
+];
 async function sendWooperWednesday() {
     for (const id of channels) {
         const channel = client.channels.cache.get(id);
