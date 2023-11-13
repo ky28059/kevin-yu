@@ -166,6 +166,65 @@ client.on('messageCreate', async (message) => {
     // Repost this fish
     if (message.content.includes('this fish')) {
         await message.reply(getGif(thisFishGifs));
+    } else if (message.mentions.has(client.user!)) {
+        // Random response to ping
+        const p = Math.random() * 100;
+
+        if (p >= 97) {
+            message.channel.send('wrong person silly 🦦');
+        } else if (p >= 92) {
+            message.channel.send(getGif(otterGifs));
+        } else if (p >= 87) {
+            message.channel.send(getGif(ponyoGifs));
+        } else if (p >= 82) {
+            message.channel.send(getGif(wooperGifs));
+        } else if (p >= 81) {
+            message.channel.send('love my fans <3');
+        } else if (p >= 78) {
+            message.channel.send('on cod ⁉️');
+        } else if (p >= 75) {
+            message.channel.send('‼️');
+        } else if (p >= 73) {
+            message.channel.send('https://wiki.haskell.org/All_About_Monads');
+        } else if (p >= 71) {
+            message.channel.send('https://github.com/SVWEFSBRWHWBCOTSEID/game-website');
+        } else if (p >= 68) {
+            message.channel.send('zoull');
+        } else if (p >= 66) {
+            message.channel.send('https://en.wikipedia.org/wiki/Duff%27s_device');
+        } else if (p >= 64) {
+            message.channel.send('https://tenor.com/view/curse-of-ra-curse-of-ra-gif-10622361558915339590');
+        } else if (p >= 62) {
+            message.channel.send('erm... what the jingles');
+        } else if (p >= 59) {
+            message.channel.send('bark like a dog');
+        } else if (p >= 56) {
+            message.channel.send('nor way 🇳🇴');
+        } else if (p >= 53) {
+            message.channel.send('https://tenor.com/view/skull-gif-23663947');
+        } else if (p >= 50) {
+            message.channel.send('reel 🎣');
+        } else if (p >= 47) {
+            message.channel.send(`<@${client.user!.id}>`);
+        } else {
+            const emotes = [
+                '🥰', '<:blobheart:912101944808583198>', '<:blobcosyandcomfy:912101890085503047>',
+                '<:blobhug:1173729381823287326>', '<:blobsalute:912101922192900136>', '<:blobreach:912101908355891210>'
+            ];
+            let msg = '';
+
+            // Acceptable emote chain length: [2, 7]
+            let remaining = 2 + Math.floor(Math.random() * 6);
+            for (let i = 0; i < emotes.length && remaining > 0; i++) {
+                const count = i === emotes.length - 1
+                    ? remaining
+                    : Math.floor(Math.random() * Math.min(remaining + 1, 4)); // [0, min(remaining, 3)]
+
+                msg += emotes[i].repeat(count);
+                remaining -= count;
+            }
+            message.channel.send(msg);
+        }
     }
 });
 
