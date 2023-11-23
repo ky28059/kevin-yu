@@ -131,42 +131,30 @@ client.on('messageCreate', async (message) => {
     if (message.author.bot) return;
     if (!message.inGuild()) return;
 
-    // Update #chill-perkash channel description automatically
-    if (message.guild.id === '859197712426729532') {
-        const desc = message.content.match(perkashRegex)?.[1]?.replaceAll('"', '\'');
-        if (!desc) return;
-
-        const channel = client.channels.cache.get('956055434173751306');
-        if (!channel || !(channel instanceof TextChannel)) return;
-
-        const oldDesc = channel.topic?.match(/maya (.+) perkash/i)?.[1];
-        await channel.setTopic(oldDesc ? `maya ${oldDesc} "${desc}" perkash` : `maya "${desc}" perkash`);
-        await message.reply('noted.');
-    }
+    const ethanMatch = message.content.match(ethanRegex);
+    const perkashDesc = message.content.match(perkashRegex)?.[1]?.replaceAll('"', '\'');
+    const perkashChannel = client.channels.cache.get('956055434173751306');
 
     // Update Saumya's nickname automatically
     if (message.guild.id === '928554105323016192' && message.author.id === '632281409134002195') {
         const nick = message.content.match(/\bI(?:['’]?|\s+a)m\s+(.+)/i)?.[1];
-        if (!nick) return;
-
         const member = message.guild.members.cache.get('632281409134002195');
-        if (!member) return;
 
-        await member.setNickname(truncate(nick, 32));
+        if (nick) await member?.setNickname(truncate(nick, 32));
     }
 
-    // Prefix `ethan` to allowed e-words (and variations)
-    if (message.guild.id === '617085013531295774') {
-        const match = message.content.match(ethanRegex)
-        if (!match) return;
-
-        await message.reply(`> ethan ${match[1]}`)
-    }
-
-    // Repost this fish
-    if (message.content.includes('this fish')) {
+    if (message.guild.id === '859197712426729532' && perkashDesc && perkashChannel instanceof TextChannel) {
+        // Update #chill-perkash channel description automatically
+        const oldDesc = perkashChannel.topic?.match(/maya (.+) perkash/i)?.[1];
+        await perkashChannel.setTopic(oldDesc ? `maya ${oldDesc} "${perkashDesc}" perkash` : `maya "${perkashDesc}" perkash`);
+        await message.reply('noted.');
+    } else if (message.guild.id === '617085013531295774' && ethanMatch) {
+        // Prefix `ethan` to allowed e-words (and variations)
+        await message.reply(`> ethan ${ethanMatch[1]}`);
+    } else if (message.content.includes('this fish')) {
+        // Repost this fish
         await message.reply(getGif(thisFishGifs));
-    } else if (message.mentions.has(client.user!)) {
+    } else if (message.mentions.parsedUsers.has(client.user!.id)) {
         // Random response to ping
         const p = Math.random() * 100;
 
