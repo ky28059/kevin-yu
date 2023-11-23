@@ -60,7 +60,8 @@ async function updateServerName() {
 
 // Reminds everyone that it is wooper wednesday!
 const channels = [
-    '859197712426729535', '928554105323016195', '617085014001319984', '1107748377631936703', '700559787972362260'
+    '859197712426729535', '928554105323016195', '617085014001319984', '1107748377631936703', '700559787972362260',
+    '750218629286461593'
 ];
 async function sendWooperWednesday() {
     for (const id of channels) {
