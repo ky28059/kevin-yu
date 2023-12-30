@@ -3,8 +3,8 @@ export function truncate(str: string, len: number) {
     return str.slice(0, len - 3).trimEnd() + '...';
 }
 
-// Gets the specified gif from a collection of gifs, or a random one if no number is supplied.
-export function getGif(gifs: string[], num?: number | null) {
-    const index = num ?? Math.floor(Math.random() * gifs.length);
-    return gifs[index];
+// Gets the specified element from an array, or a random one if no number is supplied.
+export function getRandom<T>(arr: T[], num?: number | null) {
+    const index = num ?? Math.floor(Math.random() * arr.length);
+    return arr[index];
 }

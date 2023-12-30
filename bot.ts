@@ -1,9 +1,12 @@
 import {ActivityType, Client, EmbedBuilder, TextChannel} from 'discord.js';
 import {CronJob} from 'cron';
 import {readdirSync} from 'fs';
-import {getGif, truncate} from './util';
+
+// Modules and utils
+import {getRandom, truncate} from './util';
 import {hugGifs, otterGifs, ponyoGifs, shrimpleGifs, thisFishGifs, wooperGifs} from './gifs';
 import {token} from './auth';
+import {gameChannels, questions, runSingleQuestion} from './games';
 
 
 const client = new Client({
@@ -59,26 +62,26 @@ async function updateServerName() {
 }
 
 // Reminds everyone that it is wooper wednesday!
-const channels = [
+const wooperChannels = [
     '859197712426729535', '928554105323016195', '617085014001319984', '1107748377631936703', '700559787972362260',
     '750218629286461593'
 ];
 async function sendWooperWednesday() {
-    for (const id of channels) {
+    for (const id of wooperChannels) {
         const channel = client.channels.cache.get(id);
         if (!channel?.isTextBased()) continue;
         await channel.send('https://tenor.com/view/wooper-wednesday-wooper-wednesday-pokemon-gif-21444101');
     }
 }
 async function endWooperWednesday() {
-    for (const id of channels) {
+    for (const id of wooperChannels) {
         const channel = client.channels.cache.get(id);
         if (!channel?.isTextBased()) continue;
         await channel.send('https://tenor.com/view/wooper-gif-27280303');
     }
 }
 async function postThisCat() {
-    for (const id of channels) {
+    for (const id of wooperChannels) {
         const channel = client.channels.cache.get(id);
         if (!channel?.isTextBased()) continue;
         await channel.send('https://tenor.com/view/cat-kitty-pussycat-feline-gif-26001328');
@@ -132,6 +135,10 @@ client.on('messageCreate', async (message) => {
     if (message.author.bot) return;
     if (!message.inGuild()) return;
 
+    // Category theory game
+    if (message.content === 'c.c' && !gameChannels.has(message.channel.id))
+        return runSingleQuestion(message, getRandom(questions));
+
     const ethanMatch = message.content.match(ethanRegex);
     const perkashDesc = message.content.match(perkashRegex)?.[1]?.replaceAll('"', '\'');
     const perkashChannel = client.channels.cache.get('956055434173751306');
@@ -154,7 +161,7 @@ client.on('messageCreate', async (message) => {
         await message.reply(`> ethan ${ethanMatch[1]}`);
     } else if (message.content.includes('this fish')) {
         // Repost this fish
-        await message.reply(getGif(thisFishGifs));
+        await message.reply(getRandom(thisFishGifs));
     } else if (message.mentions.parsedUsers.has(client.user!.id)) {
         // Random response to ping
         const p = Math.random() * 100;
@@ -162,11 +169,11 @@ client.on('messageCreate', async (message) => {
         if (p >= 97) {
             message.channel.send('wrong person silly 🦦');
         } else if (p >= 92) {
-            message.channel.send(getGif(otterGifs));
+            message.channel.send(getRandom(otterGifs));
         } else if (p >= 87) {
-            message.channel.send(getGif(ponyoGifs));
+            message.channel.send(getRandom(ponyoGifs));
         } else if (p >= 82) {
-            message.channel.send(getGif(wooperGifs));
+            message.channel.send(getRandom(wooperGifs));
         } else if (p >= 81) {
             message.channel.send('love my fans <3');
         } else if (p >= 78) {
@@ -272,17 +279,17 @@ client.on('interactionCreate', async (interaction) => {
                     .setColor(0xf6b40c)
             ]
         });
-        await interaction.reply(getGif(hugGifs, num));
+        await interaction.reply(getRandom(hugGifs, num));
     } else if (interaction.commandName === 'woop') {
-        await interaction.reply(getGif(wooperGifs));
+        await interaction.reply(getRandom(wooperGifs));
     } else if (interaction.commandName === 'ponyo') {
-        await interaction.reply(getGif(ponyoGifs));
+        await interaction.reply(getRandom(ponyoGifs));
     } else if (interaction.commandName === 'shrimple') {
-        await interaction.reply(getGif(shrimpleGifs));
+        await interaction.reply(getRandom(shrimpleGifs));
     } else if (interaction.commandName === 'otter') {
-        await interaction.reply(getGif(otterGifs));
+        await interaction.reply(getRandom(otterGifs));
     } else if (interaction.commandName === 'this-fish') {
-        await interaction.reply(getGif(thisFishGifs));
+        await interaction.reply(getRandom(thisFishGifs));
     }
 });
 
