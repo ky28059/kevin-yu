@@ -42,6 +42,22 @@ export const questions: QuestionInfo[] = [{
     name: 'pullback',
     sources: ['11.png'],
     href: 'https://en.wikipedia.org/wiki/Pullback_(category_theory)'
+}, {
+    name: 'hom functor',
+    sources: ['17.png'],
+    href: 'https://en.wikipedia.org/wiki/Hom_functor'
+}, {
+    name: 'triangle identity',
+    sources: ['18.png', '19.png'],
+    href: 'https://ncatlab.org/nlab/show/triangle+identities'
+}, {
+    name: 'product',
+    sources: ['20.png'],
+    href: 'https://en.wikipedia.org/wiki/Product_(category_theory)'
+}, {
+    name: 'coproduct',
+    sources: ['21.png'],
+    href: 'https://en.wikipedia.org/wiki/Coproduct'
 }]
 
 type QuestionInfo = {
@@ -77,13 +93,13 @@ export function runSingleQuestion(message: Message, data: QuestionInfo) {
             return void message.channel.send({files: [attachment]});
         }
 
-        // Skip
+        // Skip question
         if (m.content === 'c.sk' || m.content === 'c.skip') {
             guessStatus = Guess.SKIPPED;
             collector.stop();
         }
 
-        // Guess
+        // Submit guess
         if (m.content.startsWith('c.g')) {
             const guess = m.content.slice(3).trim();
             guessStatus = guess.toLowerCase() === data.name.toLowerCase()
