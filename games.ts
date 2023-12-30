@@ -16,16 +16,24 @@ export const questions: QuestionInfo[] = [{
     href: 'https://en.wikipedia.org/wiki/Natural_transformation'
 }, {
     name: 'monad',
-    sources: ['5.png'],
+    sources: ['5.png', '14.png'],
     href: 'https://en.wikipedia.org/wiki/Monad_(category_theory)'
+}, {
+    name: 'monoid',
+    sources: ['15.png', '16.png'],
+    href: 'https://en.wikipedia.org/wiki/Monoid'
 }, {
     name: 'state monad',
     sources: ['6.png', '7.png'],
     href: 'https://en.wikipedia.org/wiki/Monad_(category_theory)#The_state_monad'
 }, {
     name: 'maybe monad',
-    sources: ['8.png', '9.png'],
+    sources: ['8.png', '9.png', '12.png'],
     href: 'https://en.wikipedia.org/wiki/Monad_(category_theory)#The_maybe_monad'
+}, {
+    name: 'list monad',
+    sources: ['13.png'],
+    href: 'https://wiki.haskell.org/All_About_Monads#The_List_monad'
 }, {
     name: 'pushout',
     sources: ['10.png'],
@@ -69,6 +77,12 @@ export function runSingleQuestion(message: Message, data: QuestionInfo) {
             return void message.channel.send({files: [attachment]});
         }
 
+        // Skip
+        if (m.content === 'c.sk' || m.content === 'c.skip') {
+            guessStatus = Guess.SKIPPED;
+            collector.stop();
+        }
+
         // Guess
         if (m.content.startsWith('c.g')) {
             const guess = m.content.slice(3).trim();
@@ -81,6 +95,7 @@ export function runSingleQuestion(message: Message, data: QuestionInfo) {
     collector.on('end', () => {
         const statusMsg = guessStatus === Guess.CORRECT ? 'Correct! Good job!'
             : guessStatus === Guess.INCORRECT ? 'Incorrect.'
+            : guessStatus === Guess.SKIPPED ? 'Question skipped.'
             : 'Question timed out.'
         message.channel.send(`${statusMsg} The category theory concept was **${data.name}**.\n${data.href}`);
         gameChannels.delete(message.channel.id);
@@ -88,7 +103,7 @@ export function runSingleQuestion(message: Message, data: QuestionInfo) {
 }
 
 enum Guess {
-    CORRECT, INCORRECT, TIMEOUT
+    CORRECT, INCORRECT, TIMEOUT, SKIPPED
 }
 
 // https://stackoverflow.com/a/12646864

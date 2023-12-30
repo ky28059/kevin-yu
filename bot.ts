@@ -244,7 +244,7 @@ client.on('interactionCreate', async (interaction) => {
 
         helpEmbed.addFields(
             {name: 'wooper wednesday', value: 'A weekly celebration of wooper wednesday, as one is wont to observe. You can also use `/woop` to celebrate early!'},
-            {name: '🐱 theory', value: 'Use `c.c` to start a category theory guessing game (parodying [SciOlyID](https://sciolyid.org/about/)\'s bird identification bot)!'},
+            {name: '🐱 theory', value: 'Use `c.c` to start a category theory guessing game! (parodying [SciOlyID](https://sciolyid.org/about/)\'s bird identification bot)'},
             {name: '🫂', value: 'Use `/hug` to send a random hug gif :D', inline: true},
             {name: '🦐', value: 'Use `/shrimple` to show how shrimple (or clampicated) something is.', inline: true},
             {name: '🦦', value: 'Use `/otter` to send a random otter gif 🦦', inline: true}
