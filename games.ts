@@ -61,7 +61,7 @@ export function runSingleQuestion(message: Message, data: QuestionInfo) {
     message.channel.send({files: [attachment]});
 
     const filter = (m: Message) => m.content.startsWith('c.');
-    const collector = message.channel.createMessageCollector({filter, time: 15000});
+    const collector = message.channel.createMessageCollector({filter, time: 30000});
     let guessStatus = Guess.TIMEOUT;
 
     collector.on('collect', (m) => {
