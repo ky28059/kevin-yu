@@ -210,7 +210,14 @@ export const hugGifs = [
     'https://tenor.com/view/quagsire-quagy-quagsire-quagsire-cheer-gif-18674387',
     'https://tenor.com/view/orange-kitten-orange-cat-cat-waddling-cat-waddle-waddling-kitten-gif-26256461',
     'https://tenor.com/view/pokemon-quagsire-poker-face-pokemon-meme-gif-25436334',
-    'https://tenor.com/view/quagsirea-gif-26469956'
+    'https://tenor.com/view/quagsirea-gif-26469956',
+    'https://tenor.com/view/heart-gif-6447159128561953694',
+    'https://tenor.com/view/peach-and-goma-gif-267327447953424207',
+    'https://tenor.com/view/peach-goma-gif-2027269337444980563',
+    'https://tenor.com/view/peach-goma-carry-basket-gif-7907136615076885881',
+    'https://tenor.com/view/peach-and-goma-gif-16038951466950730137',
+    'https://tenor.com/view/goma-peach-cheeks-cute-love-gif-4176598096014880651',
+    'https://tenor.com/view/peach-and-goma-gif-14755089461093313163'
 ]
 
 export const wooperGifs = [
