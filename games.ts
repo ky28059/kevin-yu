@@ -58,6 +58,14 @@ export const questions: QuestionInfo[] = [{
     name: 'coproduct',
     sources: ['21.png'],
     href: 'https://en.wikipedia.org/wiki/Coproduct'
+}, {
+    name: 'snake lemma',
+    sources: ['22.png'],
+    href: 'https://en.wikipedia.org/wiki/Snake_lemma'
+}, {
+    name: 'enriched category',
+    sources: ['23.png', '24.png'],
+    href: 'https://en.wikipedia.org/wiki/Enriched_category'
 }]
 
 type QuestionInfo = {
@@ -96,7 +104,7 @@ export function runSingleQuestion(message: Message, data: QuestionInfo) {
         // Skip question
         if (m.content === 'c.sk' || m.content === 'c.skip') {
             guessStatus = Guess.SKIPPED;
-            collector.stop();
+            return collector.stop();
         }
 
         // Submit guess
