@@ -1,12 +1,12 @@
-import {ActivityType, Client, EmbedBuilder, TextChannel} from 'discord.js';
-import {CronJob} from 'cron';
-import {readdirSync} from 'fs';
+import { ActivityType, Client, EmbedBuilder, TextChannel } from 'discord.js';
+import { CronJob } from 'cron';
+import { readdirSync } from 'fs';
+import { token } from './auth';
 
-// Modules and utils
-import {getRandom, truncate} from './util';
-import {hugGifs, otterGifs, ponyoGifs, shrimpleGifs, thisFishGifs, wooperGifs} from './gifs';
-import {token} from './auth';
-import {gameChannels, questions, runSingleQuestion} from './games';
+// Utils
+import { hugGifs, otterGifs, ponyoGifs, shrimpleGifs, thisFishGifs, wooperGifs } from './gifs';
+import { gameChannels, questions, runSingleQuestion } from './games';
+import { getRandom, truncate } from './util';
 
 
 const client = new Client({
@@ -18,8 +18,8 @@ const client = new Client({
         "GuildMessageReactions",
         "MessageContent"
     ],
-    presence: {activities: [{type: ActivityType.Watching, name: 'y\'all 🥰'}]},
-    allowedMentions: {repliedUser: false}
+    presence: { activities: [{ type: ActivityType.Watching, name: 'y\'all 🥰' }] },
+    allowedMentions: { repliedUser: false }
 });
 
 type ServerStatusInfo = {
@@ -39,7 +39,7 @@ let postThisCatJob: CronJob<null, null>;
 // Randomizes the server name and icon
 async function updateServerName() {
     // Parse names from subdirectories of `./icons`
-    const names = readdirSync('./icons', {withFileTypes: true})
+    const names = readdirSync('./icons', { withFileTypes: true })
         .filter(dir => dir.isDirectory())
         .map(dir => dir.name);
     const name = names[Math.floor(Math.random() * names.length)];
@@ -66,6 +66,7 @@ const wooperChannels = [
     '859197712426729535', '928554105323016195', '617085014001319984', '1107748377631936703', '700559787972362260',
     '750218629286461593'
 ];
+
 async function sendWooperWednesday() {
     for (const id of wooperChannels) {
         const channel = client.channels.cache.get(id);
@@ -73,6 +74,7 @@ async function sendWooperWednesday() {
         await channel.send('https://tenor.com/view/wooper-wednesday-wooper-wednesday-pokemon-gif-21444101');
     }
 }
+
 async function endWooperWednesday() {
     for (const id of wooperChannels) {
         const channel = client.channels.cache.get(id);
@@ -80,6 +82,7 @@ async function endWooperWednesday() {
         await channel.send('https://tenor.com/view/wooper-gif-27280303');
     }
 }
+
 async function postThisCat() {
     for (const id of wooperChannels) {
         const channel = client.channels.cache.get(id);
@@ -90,7 +93,7 @@ async function postThisCat() {
 
 // Formats the current server status info for display in commands
 function formatStatusInfo() {
-    const {name, iconName, iconNumber, totalIcons} = statusInfo;
+    const { name, iconName, iconNumber, totalIcons } = statusInfo;
     return `**${name}**, using icon \`${iconName}\` (${iconNumber}/${totalIcons})`;
 }
 
@@ -234,23 +237,23 @@ client.on('interactionCreate', async (interaction) => {
             .setDescription('It is I! ~~Dio~~ Kevin Yu! This bot occasionally does things. Ping <@355534246439419904> if it breaks.')
 
         if (interaction.guildId === '859197712426729532') helpEmbed.addFields(
-            {name: 'maya automated perkash', value: `All messages matched in the form of \`maya [...] perkash\` will update the <#956055434173751306> description accordingly. For the curious, the regex used is \`${perkashRegex}\`.`},
-            {name: 'server name shuffling', value: 'Every 24 hours, the server name is shuffled randomly between the cool people of this server 🥰. Get the status of the refresh loop with `/status` and immediately trigger a refresh with `/refresh`.'}
+            { name: 'maya automated perkash', value: `All messages matched in the form of \`maya [...] perkash\` will update the <#956055434173751306> description accordingly. For the curious, the regex used is \`${perkashRegex}\`.` },
+            { name: 'server name shuffling', value: 'Every 24 hours, the server name is shuffled randomly between the cool people of this server 🥰. Get the status of the refresh loop with `/status` and immediately trigger a refresh with `/refresh`.' }
         );
 
         if (interaction.guildId === '617085013531295774') helpEmbed.addFields(
-            {name: 'ethan gads!', value: `Kevin Yu will prefix "ethan" to allowed e-words. For the curious, the regex used is: \`\`\`\n${ethanRegex}\n\`\`\``}
+            { name: 'ethan gads!', value: `Kevin Yu will prefix "ethan" to allowed e-words. For the curious, the regex used is: \`\`\`\n${ethanRegex}\n\`\`\`` }
         );
 
         helpEmbed.addFields(
-            {name: 'wooper wednesday', value: 'A weekly celebration of wooper wednesday, as one is wont to observe. You can also use `/woop` to celebrate early!'},
-            {name: '🐱 theory', value: 'Use `c.c` to start a category theory guessing game! (parodying [SciOlyID](https://sciolyid.org/about/)\'s bird identification bot)'},
-            {name: '🫂', value: 'Use `/hug` to send a random hug gif :D', inline: true},
-            {name: '🦐', value: 'Use `/shrimple` to show how shrimple (or clampicated) something is.', inline: true},
-            {name: '🦦', value: 'Use `/otter` to send a random otter gif 🦦', inline: true}
+            { name: 'wooper wednesday', value: 'A weekly celebration of wooper wednesday, as one is wont to observe. You can also use `/woop` to celebrate early!' },
+            { name: '🐱 theory', value: 'Use `c.c` to start a category theory guessing game! (parodying [SciOlyID](https://sciolyid.org/about/)\'s bird identification bot)' },
+            { name: '🫂', value: 'Use `/hug` to send a random hug gif :D', inline: true },
+            { name: '🦐', value: 'Use `/shrimple` to show how shrimple (or clampicated) something is.', inline: true },
+            { name: '🦦', value: 'Use `/otter` to send a random otter gif 🦦', inline: true }
         );
 
-        await interaction.reply({embeds: [helpEmbed]});
+        await interaction.reply({ embeds: [helpEmbed] });
     } else if (interaction.commandName === 'status') {
         const lastRunTimestamp = Math.floor(serverUpdateJob.lastDate()!.valueOf() / 1000);
         const nextRunTimestamp = Math.floor(serverUpdateJob.nextDate().valueOf() / 1000);
@@ -260,7 +263,7 @@ client.on('interactionCreate', async (interaction) => {
             .setColor(0xf6b40c)
             .setDescription(`The server name is currently ${formatStatusInfo()}.\n\nThe server was last updated on <t:${lastRunTimestamp}>. The next update is scheduled for <t:${nextRunTimestamp}>, <t:${nextRunTimestamp}:R>.`)
 
-        await interaction.reply({embeds: [statusEmbed]});
+        await interaction.reply({ embeds: [statusEmbed] });
     } else if (interaction.commandName === 'refresh') {
         await updateServerName();
 
@@ -268,15 +271,15 @@ client.on('interactionCreate', async (interaction) => {
             .setTitle('Refresh successful!')
             .setColor(0xf6b40c)
             .setDescription(`The server name is now ${formatStatusInfo()}. The next update is scheduled <t:${Math.floor(serverUpdateJob.nextDate().valueOf() / 1000)}:R>.`)
-            .setFooter({text: 'To avoid rate limits, it is recommended to refrain from calling this command again in the next 5 minutes.'})
+            .setFooter({ text: 'To avoid rate limits, it is recommended to refrain from calling this command again in the next 5 minutes.' })
 
-        await interaction.reply({embeds: [successEmbed]});
+        await interaction.reply({ embeds: [successEmbed] });
     } else if (interaction.commandName === 'hug') {
         const num = interaction.options.getInteger('num');
         if (num && (num >= hugGifs.length || num < 0)) return void await interaction.reply({
             embeds: [
                 new EmbedBuilder()
-                    .setAuthor({name: `Invalid index! Keep indexes between [0, ${hugGifs.length - 1}].`})
+                    .setAuthor({ name: `Invalid index! Keep indexes between [0, ${hugGifs.length - 1}].` })
                     .setColor(0xf6b40c)
             ]
         });
@@ -294,8 +297,7 @@ client.on('interactionCreate', async (interaction) => {
     }
 });
 
-// Error handling
-client.on('warn', info => console.log(info));
+client.on('warn', info => console.warn(info));
 client.on('error', error => console.error(error));
 
 void client.login(token);

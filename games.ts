@@ -1,5 +1,5 @@
-import {AttachmentBuilder, Message} from 'discord.js';
-import {readFileSync} from 'fs';
+import { AttachmentBuilder, Message } from 'discord.js';
+import { readFileSync } from 'fs';
 
 
 export const questions: QuestionInfo[] = [{
@@ -82,10 +82,10 @@ export function runSingleQuestion(message: Message, data: QuestionInfo) {
     let i = 0;
 
     const attachment = new AttachmentBuilder(readFileSync(`./assets/${shuffled[i]}`));
-    message.channel.send({files: [attachment]});
+    message.channel.send({ files: [attachment] });
 
     const filter = (m: Message) => m.content.startsWith('c.');
-    const collector = message.channel.createMessageCollector({filter, time: 30000});
+    const collector = message.channel.createMessageCollector({ filter, time: 30000 });
     let guessStatus = Guess.TIMEOUT;
 
     collector.on('collect', (m) => {
@@ -98,7 +98,7 @@ export function runSingleQuestion(message: Message, data: QuestionInfo) {
             if (++i >= shuffled.length) return void message.channel.send('*There are no more pictures of this item.*');
 
             const attachment = new AttachmentBuilder(readFileSync(`./assets/${shuffled[i]}`));
-            return void message.channel.send({files: [attachment]});
+            return void message.channel.send({ files: [attachment] });
         }
 
         // Skip question
