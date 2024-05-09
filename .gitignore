@@ -79,5 +79,5 @@ typings/
 .idea
 
 # private
-auth.ts
+config.ts
 icons/*

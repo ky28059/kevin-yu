@@ -1,12 +1,14 @@
 import { ActivityType, Client, EmbedBuilder, TextChannel } from 'discord.js';
 import { CronJob } from 'cron';
 import { readdirSync } from 'fs';
-import { token } from './auth';
 
 // Utils
 import { hugGifs, otterGifs, ponyoGifs, shrimpleGifs, thisFishGifs, wooperGifs } from './gifs';
 import { gameChannels, questions, runSingleQuestion } from './games';
 import { getRandom, truncate } from './util';
+
+// Config
+import { thisFishServers, token, wooperChannels } from './config';
 
 
 const client = new Client({
@@ -62,11 +64,6 @@ async function updateServerName() {
 }
 
 // Reminds everyone that it is wooper wednesday!
-const wooperChannels = [
-    '859197712426729535', '928554105323016195', '617085014001319984', '1107748377631936703', '700559787972362260',
-    '750218629286461593'
-];
-
 async function sendWooperWednesday() {
     for (const id of wooperChannels) {
         const channel = client.channels.cache.get(id);
@@ -162,7 +159,7 @@ client.on('messageCreate', async (message) => {
     } else if (message.guild.id === '617085013531295774' && ethanMatch) {
         // Prefix `ethan` to allowed e-words (and variations)
         await message.reply(`> ethan ${ethanMatch[1]}`);
-    } else if (message.content.includes('this fish')) {
+    } else if (thisFishServers.includes(message.guild.id) && message.content.includes('this fish')) {
         // Repost this fish
         await message.reply(getRandom(thisFishGifs));
     } else if (message.mentions.parsedUsers.has(client.user!.id)) {

@@ -1,7 +1,7 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
 import { REST } from '@discordjs/rest';
 import { Routes } from 'discord-api-types/v9';
-import { token } from './auth';
+import { thisFishServers, token } from './config';
 
 
 const globalCommands = [
@@ -31,10 +31,6 @@ const globalCommands = [
     new SlashCommandBuilder()
         .setName('otter')
         .setDescription('Man...')
-        .toJSON(),
-    new SlashCommandBuilder()
-        .setName('this-fish')
-        .setDescription('Repost this fish')
         .toJSON()
 ];
 
@@ -48,6 +44,11 @@ const serverCommands = [
         .setDescription('Immediately refreshes the server name.')
         .toJSON()
 ]
+
+const thisFishCommand = new SlashCommandBuilder()
+    .setName('this-fish')
+    .setDescription('Repost this fish')
+    .toJSON()
 
 const clientId = '973385182566580344';
 const rest = new REST({ version: '9' }).setToken(token);
@@ -67,6 +68,14 @@ const rest = new REST({ version: '9' }).setToken(token);
             Routes.applicationGuildCommands(clientId, '859197712426729532'),
             { body: serverCommands }
         );
+
+        // Register this fish in the allowed servers
+        for (const server of thisFishServers) {
+            await rest.put(
+                Routes.applicationGuildCommands(clientId, server),
+                { body: [thisFishCommand] }
+            )
+        }
 
         console.log('Successfully reloaded application and guild (/) commands.');
     } catch (error) {
