@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon';
-import { birthdays } from './config';
+import { birthdays, timeZone } from './config';
 
 
 export type BirthdayInfo = {
@@ -19,7 +19,7 @@ export function getBirthdayInfo(ids: Set<string>) {
         ? birthdays
         : birthdays.filter(d => ids.has(d.userId))
 
-    const now = DateTime.now();
+    const now = DateTime.now().setZone(timeZone);
     return filtered
         .map(b => ({ ...b, date: getNextBirthday(b.date, now) })) // Map birthdays to their next occurrence
         .sort((a, b) => a.date.valueOf() - b.date.valueOf())

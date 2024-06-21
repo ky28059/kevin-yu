@@ -7,10 +7,10 @@ import { readdirSync } from 'fs';
 import { hugGifs, otterGifs, ponyoGifs, shrimpleGifs, thisFishGifs, wooperGifs } from './gifs';
 import { gameChannels, questions, runSingleQuestion } from './games';
 import { getBirthdayInfo, getNextBirthday } from './birthdays';
-import { getRandom, truncate } from './util';
+import { generateRandomEmojiString, getRandom, truncate } from './util';
 
 // Config
-import { birthdays, thisFishServers, token, wooperChannels } from './config';
+import { birthdays, thisFishServers, timeZone, token, wooperChannels } from './config';
 
 
 const client = new Client({
@@ -92,7 +92,7 @@ async function postThisCat() {
 }
 
 async function checkBirthdays() {
-    const today = DateTime.now().startOf('day');
+    const today = DateTime.now().setZone(timeZone).startOf('day');
 
     // Check every birthday to see if it occurs today
     for (const b of birthdays) {
@@ -102,7 +102,7 @@ async function checkBirthdays() {
         for (const id of b.channelIds) {
             const channel = client.channels.cache.get(id);
             if (!channel?.isTextBased()) continue;
-            await channel.send(`<@${b.userId}> 🥳`);
+            await channel.send(`<@${b.userId}>  ${generateRandomEmojiString(['🔥', '🥳', '🍰', '🎉'], 4, 6)}`);
         }
     }
 }
@@ -127,32 +127,32 @@ client.once('ready', async () => {
         cronTime: '0 0 0 * * *',
         onTick: updateServerName,
         start: true,
-        timeZone: 'America/Indiana/Indianapolis',
+        timeZone,
         runOnInit: true
     });
     wooperWednesdayJob = CronJob.from({
         cronTime: '0 0 0 * * Wed',
         onTick: sendWooperWednesday,
         start: true,
-        timeZone: 'America/Indiana/Indianapolis'
+        timeZone
     });
     endWooperWednesdayJob = CronJob.from({
         cronTime: '0 0 0 * * Thu',
         onTick: endWooperWednesday,
         start: true,
-        timeZone: 'America/Indiana/Indianapolis'
+        timeZone
     });
     postThisCatJob = CronJob.from({
         cronTime: '0 0 0 19 * *',
         onTick: postThisCat,
         start: true,
-        timeZone: 'America/Indiana/Indianapolis'
+        timeZone
     });
     birthdayJob = CronJob.from({
         cronTime: '0 0 0 * * *',
         onTick: checkBirthdays,
         start: true,
-        timeZone: 'America/Indiana/Indianapolis',
+        timeZone,
         runOnInit: true
     });
 });
@@ -233,19 +233,7 @@ client.on('messageCreate', async (message) => {
                 '🥰', '<:blobheart:912101944808583198>', '<:blobcosyandcomfy:912101890085503047>',
                 '<:blobhug:1173729381823287326>', '<:blobsalute:912101922192900136>', '<:blobreach:912101908355891210>'
             ];
-            let msg = '';
-
-            // Acceptable emote chain length: [2, 7]
-            let remaining = 2 + Math.floor(Math.random() * 6);
-            for (let i = 0; i < emotes.length && remaining > 0; i++) {
-                const count = i === emotes.length - 1
-                    ? remaining
-                    : Math.floor(Math.random() * Math.min(remaining + 1, 4)); // [0, min(remaining, 3)]
-
-                msg += emotes[i].repeat(count);
-                remaining -= count;
-            }
-            message.channel.send(msg);
+            message.channel.send(generateRandomEmojiString(emotes));
         }
     }
 });

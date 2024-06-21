@@ -9,6 +9,7 @@ import type { BirthdayInfo } from './birthdays';
 import { DateTime } from 'luxon';
 
 
+export const timeZone = 'America/Indiana/Indianapolis';
 export const token = 'real-discord-token-trust';
 
 export const wooperChannels = [
@@ -23,7 +24,7 @@ export const birthdays: BirthdayInfo[] = [
     {
         userId: '...',
         channelIds: ['...', ...],
-        date: DateTime.fromISO('...')
+        date: DateTime.fromISO('...', { zone: timeZone })
     },
     ...
 ];
