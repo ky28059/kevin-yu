@@ -298,11 +298,12 @@ client.on('interactionCreate', async (interaction) => {
             ? new Set([...members].map(m => m.id))
             : new Set<string>()
 
-        const birthdayInfo = getBirthdayInfo(ids);
         const birthdayEmbed = new EmbedBuilder()
-            .setTitle('Upcoming birthdays')
+            .setTitle(interaction.guild
+                ? `Upcoming ${interaction.guild.name} birthdays`
+                : 'Upcoming birthdays')
             .setColor(0xf6b40c)
-            .setDescription(birthdayInfo)
+            .setDescription(getBirthdayInfo(ids))
 
         await interaction.reply({ embeds: [birthdayEmbed] })
     }
