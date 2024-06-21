@@ -5,6 +5,7 @@ import { readdirSync } from 'fs';
 // Utils
 import { hugGifs, otterGifs, ponyoGifs, shrimpleGifs, thisFishGifs, wooperGifs } from './gifs';
 import { gameChannels, questions, runSingleQuestion } from './games';
+import { getBirthdayInfo } from './birthdays';
 import { getRandom, truncate } from './util';
 
 // Config
@@ -291,6 +292,19 @@ client.on('interactionCreate', async (interaction) => {
         await interaction.reply(getRandom(otterGifs));
     } else if (interaction.commandName === 'this-fish') {
         await interaction.reply(getRandom(thisFishGifs));
+    } else if (interaction.commandName === 'birthdays') {
+        const members = interaction.guild?.members.cache.values();
+        const ids = members
+            ? new Set([...members].map(m => m.id))
+            : new Set<string>()
+
+        const birthdayInfo = getBirthdayInfo(ids);
+        const birthdayEmbed = new EmbedBuilder()
+            .setTitle('Upcoming birthdays')
+            .setColor(0xf6b40c)
+            .setDescription(birthdayInfo)
+
+        await interaction.reply({ embeds: [birthdayEmbed] })
     }
 });
 

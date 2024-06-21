@@ -31,6 +31,10 @@ const globalCommands = [
     new SlashCommandBuilder()
         .setName('otter')
         .setDescription('Man...')
+        .toJSON(),
+    new SlashCommandBuilder()
+        .setName('birthdays')
+        .setDescription('Gets upcoming birthdays in the current server.')
         .toJSON()
 ];
 
