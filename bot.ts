@@ -1,15 +1,16 @@
 import { ActivityType, Client, EmbedBuilder, TextChannel } from 'discord.js';
 import { CronJob } from 'cron';
+import { DateTime } from 'luxon';
 import { readdirSync } from 'fs';
 
 // Utils
 import { hugGifs, otterGifs, ponyoGifs, shrimpleGifs, thisFishGifs, wooperGifs } from './gifs';
 import { gameChannels, questions, runSingleQuestion } from './games';
-import { getBirthdayInfo } from './birthdays';
+import { getBirthdayInfo, getNextBirthday } from './birthdays';
 import { getRandom, truncate } from './util';
 
 // Config
-import { thisFishServers, token, wooperChannels } from './config';
+import { birthdays, thisFishServers, token, wooperChannels } from './config';
 
 
 const client = new Client({
@@ -37,6 +38,7 @@ let serverUpdateJob: CronJob<null, null>;
 let wooperWednesdayJob: CronJob<null, null>;
 let endWooperWednesdayJob: CronJob<null, null>;
 let postThisCatJob: CronJob<null, null>;
+let birthdayJob: CronJob<null, null>;
 
 
 // Randomizes the server name and icon
@@ -89,6 +91,22 @@ async function postThisCat() {
     }
 }
 
+async function checkBirthdays() {
+    const today = DateTime.now().startOf('day');
+
+    // Check every birthday to see if it occurs today
+    for (const b of birthdays) {
+        const nextDate = getNextBirthday(b.date, today);
+        if (today.valueOf() !== nextDate.valueOf()) continue;
+
+        for (const id of b.channelIds) {
+            const channel = client.channels.cache.get(id);
+            if (!channel?.isTextBased()) continue;
+            await channel.send(`<@${b.userId}> 🥳`);
+        }
+    }
+}
+
 // Formats the current server status info for display in commands
 function formatStatusInfo() {
     const { name, iconName, iconNumber, totalIcons } = statusInfo;
@@ -129,6 +147,13 @@ client.once('ready', async () => {
         onTick: postThisCat,
         start: true,
         timeZone: 'America/Indiana/Indianapolis'
+    });
+    birthdayJob = CronJob.from({
+        cronTime: '0 0 0 * * *',
+        onTick: checkBirthdays,
+        start: true,
+        timeZone: 'America/Indiana/Indianapolis',
+        runOnInit: true
     });
 });
 
@@ -300,10 +325,11 @@ client.on('interactionCreate', async (interaction) => {
 
         const birthdayEmbed = new EmbedBuilder()
             .setTitle(interaction.guild
-                ? `Upcoming ${interaction.guild.name} birthdays`
-                : 'Upcoming birthdays')
+                ? `Upcoming ${interaction.guild.name} birthdays  🎉`
+                : 'Upcoming birthdays  🎉')
             .setColor(0xf6b40c)
             .setDescription(getBirthdayInfo(ids))
+            .setFooter({ text: 'If any of the above dates are wrong, please let me know!' })
 
         await interaction.reply({ embeds: [birthdayEmbed] })
     }
