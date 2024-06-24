@@ -152,8 +152,7 @@ client.once('ready', async () => {
         cronTime: '0 0 0 * * *',
         onTick: checkBirthdays,
         start: true,
-        timeZone,
-        runOnInit: true
+        timeZone
     });
 });
 
