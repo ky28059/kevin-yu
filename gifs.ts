@@ -217,7 +217,17 @@ export const hugGifs = [
     'https://tenor.com/view/peach-goma-carry-basket-gif-7907136615076885881',
     'https://tenor.com/view/peach-and-goma-gif-16038951466950730137',
     'https://tenor.com/view/goma-peach-cheeks-cute-love-gif-4176598096014880651',
-    'https://tenor.com/view/peach-and-goma-gif-14755089461093313163'
+    'https://tenor.com/view/peach-and-goma-gif-14755089461093313163',
+    'https://tenor.com/view/peach-goma-gif-17090235916533492463',
+    'https://tenor.com/view/goma-peach-gif-1642792778705518688',
+    'https://tenor.com/view/peach-peachandgoma-workout-jumping-jump-gif-27375113',
+    'https://tenor.com/view/yelynn-chay-chay-yelynnn-chay-chay-yelynnn-yelynn-yelynnn-chay-ne-gif-5397397445577401064',
+    'https://cdn.discordapp.com/attachments/950102545571913814/1239812796691251200/WayOfTheQuay_-_1790149521898451208.gif',
+    'https://tenor.com/view/gatitos-gif-14844602692137977798',
+    'https://tenor.com/view/peach-goma-cart-gif-15170683920388802790',
+    'https://tenor.com/view/%EB%AA%A8%EC%B0%8C-%EB%AA%A8%EB%AA%A8%EC%B0%8C-%EB%AA%A8%EB%AA%A8%EB%83%A5-%EC%9A%A4-gif-610634896833770255',
+    'https://tenor.com/view/peac-gif-12167024318895098206',
+    'https://tenor.com/view/peach-goma-gif-9785245993358028006'
 ]
 
 export const wooperGifs = [
@@ -242,7 +252,8 @@ export const wooperGifs = [
     'https://tenor.com/view/pokemon-pok%C3%A9mon-wooper-jump-around-the-world-gif-9105693827883556990',
     'https://tenor.com/view/quagsire-quagy-quagsire-quagsire-cheer-gif-18674387',
     'https://tenor.com/view/pokemon-quagsire-poker-face-pokemon-meme-gif-25436334',
-    'https://tenor.com/view/quagsirea-gif-26469956'
+    'https://tenor.com/view/quagsirea-gif-26469956',
+    'https://cdn.discordapp.com/attachments/950102545571913814/1239812796691251200/WayOfTheQuay_-_1790149521898451208.gif'
 ]
 
 export const ponyoGifs = [
