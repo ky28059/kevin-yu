@@ -6,7 +6,7 @@ import { readdirSync } from 'fs';
 // Utils
 import { hugGifs, otterGifs, ponyoGifs, shrimpleGifs, thisFishGifs, wooperGifs } from './gifs';
 import { gameChannels, questions, runSingleQuestion } from './games';
-import { getBirthdayInfo, getNextBirthday } from './birthdays';
+import { getBirthdays, getNextBirthday } from './birthdays';
 import { generateRandomEmojiString, getRandom, truncate } from './util';
 
 // Config
@@ -310,12 +310,24 @@ client.on('interactionCreate', async (interaction) => {
             ? new Set([...members].map(m => m.id))
             : new Set<string>()
 
+        // Simple heuristic to determine if birthdays are banned
+        const birthdays = getBirthdays(ids);
+        if (birthdays.length / ids.size <= 0.01) {
+            const failEmbed = new EmbedBuilder().setDescription('Birthdays are disabled in public servers.');
+            return void await interaction.reply({ embeds: [failEmbed], ephemeral: true });
+        }
+
+        const desc = birthdays
+            .map((d, i) => `${i + 1}. <@${d.userId}> on <t:${d.date.valueOf() / 1000}:D> <t:${d.date.valueOf() / 1000}:R>`)
+            .join('\n')
+            || '*No birthdays known for the current server!*'
+
         const birthdayEmbed = new EmbedBuilder()
             .setTitle(interaction.guild
                 ? `Upcoming ${interaction.guild.name} birthdays  🎉`
                 : 'Upcoming birthdays  🎉')
             .setColor(0xf6b40c)
-            .setDescription(getBirthdayInfo(ids))
+            .setDescription(desc)
             .setFooter({ text: 'If any of the above dates are wrong, please let me know!' })
 
         await interaction.reply({ embeds: [birthdayEmbed] })

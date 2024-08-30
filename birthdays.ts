@@ -14,7 +14,7 @@ export function getNextBirthday(date: DateTime, now: DateTime) {
         : DateTime.local(now.year, date.month, date.day)
 }
 
-export function getBirthdayInfo(ids: Set<string>) {
+export function getBirthdays(ids: Set<string>) {
     const filtered = ids.size === 0
         ? birthdays
         : birthdays.filter(d => ids.has(d.userId))
@@ -22,8 +22,5 @@ export function getBirthdayInfo(ids: Set<string>) {
     const now = DateTime.now().setZone(timeZone);
     return filtered
         .map(b => ({ ...b, date: getNextBirthday(b.date, now) })) // Map birthdays to their next occurrence
-        .sort((a, b) => a.date.valueOf() - b.date.valueOf())
-        .map((d, i) => `${i + 1}. <@${d.userId}> on <t:${d.date.valueOf() / 1000}:D> <t:${d.date.valueOf() / 1000}:R>`)
-        .join('\n')
-        || '*No birthdays known for the current server!*'
+        .sort((a, b) => a.date.valueOf() - b.date.valueOf());
 }
