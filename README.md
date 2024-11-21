@@ -5,7 +5,7 @@ https://discord.com/oauth2/authorize?client_id=973385182566580344&scope=bot+appl
 
 To run, create a `config.ts` exporting your discord token and channel / server configs:
 ```ts
-import type { BirthdayInfo } from './birthdays';
+import type { BirthdayInfo } from './modules/birthdays';
 import { DateTime } from 'luxon';
 
 

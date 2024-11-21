@@ -4,9 +4,9 @@ import { DateTime } from 'luxon';
 import { readdirSync } from 'fs';
 
 // Utils
-import { hugGifs, otterGifs, ponyoGifs, shrimpleGifs, thisFishGifs, wooperGifs } from './gifs';
-import { gameChannels, questions, runSingleQuestion } from './games';
-import { getBirthdays, getNextBirthday } from './birthdays';
+import { hugGifs, otterGifs, ponyoGifs, shrimpleGifs, thisFishGifs, wooperGifs } from './modules/gifs';
+import { gameChannels, questions, runSingleQuestion } from './modules/games';
+import { getBirthdays, getNextBirthday } from './modules/birthdays';
 import { generateRandomEmojiString, getRandom, truncate } from './util';
 
 // Config
@@ -33,6 +33,8 @@ type ServerStatusInfo = {
     totalIcons: number,
 }
 let statusInfo: ServerStatusInfo;
+
+let killNeil = false;
 
 let serverUpdateJob: CronJob<null, null>;
 let wooperWednesdayJob: CronJob<null, null>;
@@ -160,6 +162,10 @@ client.on('messageCreate', async (message) => {
     if (message.author.bot) return;
     if (!message.inGuild()) return;
 
+    // Kill neil for his crimes
+    if (killNeil && message.author.id === '221731072822607872' && message.deletable)
+        return void await message.delete();
+
     // Category theory game
     if (message.content === 'c.c' && !gameChannels.has(message.channel.id))
         return runSingleQuestion(message, getRandom(questions));
@@ -184,6 +190,12 @@ client.on('messageCreate', async (message) => {
     } else if (message.guild.id === '617085013531295774' && ethanMatch) {
         // Prefix `ethan` to allowed e-words (and variations)
         await message.reply(`> ethan ${ethanMatch[1]}`);
+    } else if (message.author.id === '355534246439419904' && message.content === '<@973385182566580344> kill neil') {
+        killNeil = true;
+        await message.react('👍');
+    } else if (message.author.id === '355534246439419904' && message.content === '<@973385182566580344> stop killing neil') {
+        killNeil = false;
+        await message.react('👍');
     } else if (thisFishServers.includes(message.guild.id) && message.content.includes('this fish')) {
         // Repost this fish
         await message.reply(getRandom(thisFishGifs));

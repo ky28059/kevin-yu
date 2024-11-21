@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon';
-import { birthdays, timeZone } from './config';
+import { birthdays, timeZone } from '../config';
 
 
 export type BirthdayInfo = {
