@@ -1,0 +1,8 @@
+version: "3.7"
+services:
+    kevin_yu:
+        container_name: kevin-yu
+        build:
+            dockerfile: ./Dockerfile
+            context: .
+        restart: always
