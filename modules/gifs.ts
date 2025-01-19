@@ -227,7 +227,21 @@ export const hugGifs = [
     'https://tenor.com/view/peach-goma-cart-gif-15170683920388802790',
     'https://tenor.com/view/%EB%AA%A8%EC%B0%8C-%EB%AA%A8%EB%AA%A8%EC%B0%8C-%EB%AA%A8%EB%AA%A8%EB%83%A5-%EC%9A%A4-gif-610634896833770255',
     'https://tenor.com/view/peac-gif-12167024318895098206',
-    'https://tenor.com/view/peach-goma-gif-9785245993358028006'
+    'https://tenor.com/view/peach-goma-gif-9785245993358028006',
+    'https://tenor.com/view/funny-animals-good-morning-waking-up-cute-otters-gif-11636410',
+    'https://tenor.com/view/otter-wotter-cute-animal-gif-20621989',
+    'https://tenor.com/view/cute-frog-glass-abi-toads-toad-sad-gif-3111019021779484852',
+    'https://tenor.com/view/peach-goma-swinging-gif-16345187067885236693',
+    'https://tenor.com/view/abitoads-abi-toads-frog-cute-playing-gif-15557404634373782064',
+    'https://tenor.com/view/goma-peach-gif-15425317675359151712',
+    'https://tenor.com/view/frog-froggy-gif-3902891486111334047',
+    'https://tenor.com/view/sad-abitoads-abi-toads-cute-rain-gif-5845226362054854067',
+    'https://tenor.com/view/frog-toad-cute-abi-toads-leaf-falling-gif-13083934902213066559',
+    'https://tenor.com/view/abi-toads-sleep-gif-7917196492335301251',
+    'https://tenor.com/view/abi-toads-shroom-cage-mirror-curious-gif-10583476416460386365',
+    'https://tenor.com/view/abitoads-abi-toads-cute-relaxing-laying-gif-2023395189955333553',
+    'https://tenor.com/view/goma-peach-gif-14915594368801192767',
+    'https://tenor.com/view/peach-and-goma-chow-down-gif-5620915322157527742'
 ]
 
 export const wooperGifs = [
@@ -307,7 +321,20 @@ export const otterGifs = [
     'https://tenor.com/view/otter-slam-dunk-cute-win-gif-8932419',
     'https://tenor.com/view/shook-otter-funny-animals-get-otter-here-shocked-gif-11113562',
     'https://tenor.com/view/otter-otters-nutria-gif-25748318',
-    'https://tenor.com/view/otter-shock-gif-24438775'
+    'https://tenor.com/view/otter-shock-gif-24438775',
+    'https://tenor.com/view/funny-animals-good-morning-waking-up-cute-otters-gif-11636410',
+    'https://tenor.com/view/otter-wotter-cute-animal-gif-20621989'
+]
+
+export const frogGifs = [
+    'https://tenor.com/view/cute-frog-glass-abi-toads-toad-sad-gif-3111019021779484852',
+    'https://tenor.com/view/abitoads-abi-toads-frog-cute-playing-gif-15557404634373782064',
+    'https://tenor.com/view/frog-froggy-gif-3902891486111334047',
+    'https://tenor.com/view/sad-abitoads-abi-toads-cute-rain-gif-5845226362054854067',
+    'https://tenor.com/view/frog-toad-cute-abi-toads-leaf-falling-gif-13083934902213066559',
+    'https://tenor.com/view/abi-toads-sleep-gif-7917196492335301251',
+    'https://tenor.com/view/abi-toads-shroom-cage-mirror-curious-gif-10583476416460386365',
+    'https://tenor.com/view/abitoads-abi-toads-cute-relaxing-laying-gif-2023395189955333553'
 ]
 
 export const thisFishGifs = [
