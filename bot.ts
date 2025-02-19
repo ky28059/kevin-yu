@@ -346,6 +346,49 @@ client.on('interactionCreate', async (interaction) => {
     }
 });
 
+client.on('messageDelete', async (message) => {
+    if (!message.author) return;
+    if (message.author.bot) return;
+    if (message.guildId !== '1335666560420937740') return;
+
+    const logChannel = client.channels.cache.get('1341632462341804103');
+    if (!logChannel?.isTextBased()) return;
+
+    const deletedEmbed = new EmbedBuilder()
+        .setAuthor({ name: message.author.username, iconURL: message.author.displayAvatarURL() })
+        .setDescription(`**Message in ${message.channel} was deleted:**\n${message.content}`)
+        .setTimestamp()
+        .setColor(0xb50300)
+        .setFooter({ text: 'Deleted message' });
+
+    await logChannel.send({ embeds: [deletedEmbed] });
+});
+
+client.on('messageUpdate', async (oldMessage, newMessage) => {
+    if (!oldMessage.author) return;
+    if (oldMessage.author.bot) return;
+    if (oldMessage.guildId !== '1335666560420937740') return;
+
+    const logChannel = client.channels.cache.get('1341632462341804103');
+    if (!logChannel?.isTextBased()) return;
+
+    const desc = `**Message in ${oldMessage.channel} was edited:** [Jump to message](${newMessage.url})`;
+    const fields = [
+        { name: 'Before:', value: truncate((oldMessage.content ?? '*[Partial message]*') || '*[Empty message]*', 1024) },
+        { name: 'After:', value: truncate((newMessage.content ?? '*[Partial message]*') || '*[Empty message]*', 1024) }
+    ];
+
+    const deletedEmbed = new EmbedBuilder()
+        .setAuthor({ name: oldMessage.author.username, iconURL: oldMessage.author.displayAvatarURL() })
+        .setDescription(desc)
+        .addFields(fields)
+        .setTimestamp()
+        .setColor(0xed7501)
+        .setFooter({ text: 'Edited message' });
+
+    await logChannel.send({ embeds: [deletedEmbed] });
+});
+
 client.on('warn', info => console.warn(info));
 client.on('error', error => console.error(error));
 
