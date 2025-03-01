@@ -372,6 +372,9 @@ client.on('messageUpdate', async (oldMessage, newMessage) => {
     const logChannel = client.channels.cache.get('1341632462341804103');
     if (!logChannel?.isTextBased()) return;
 
+    // Prevent logs for messages whose content hasn't changed
+    if (oldMessage.content === newMessage.content) return;
+
     const desc = `**Message in ${oldMessage.channel} was edited:** [Jump to message](${newMessage.url})`;
     const fields = [
         { name: 'Before:', value: truncate((oldMessage.content ?? '*[Partial message]*') || '*[Empty message]*', 1024) },
