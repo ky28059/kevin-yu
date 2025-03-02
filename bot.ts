@@ -7,6 +7,7 @@ import { readdirSync } from 'fs';
 import { hugGifs, otterGifs, ponyoGifs, shrimpleGifs, thisFishGifs, wooperGifs } from './modules/gifs';
 import { gameChannels, questions, runSingleQuestion } from './modules/games';
 import { getBirthdays, getNextBirthday } from './modules/birthdays';
+import { generateRandomAnimalOutcome } from './modules/linda';
 import { generateRandomEmojiString, getRandom, truncate } from './util';
 
 // Config
@@ -199,6 +200,9 @@ client.on('messageCreate', async (message) => {
     } else if (thisFishServers.includes(message.guild.id) && message.content.includes('this fish')) {
         // Repost this fish
         await message.reply(getRandom(thisFishGifs));
+    } else if (message.guild.id === '1335666560420937740' && message.author.id === '533836540166799360' && message.content.match(/i(?:t'?)?s ok/i)) {
+        // Discourage linda from self-dep
+        await message.reply(generateRandomAnimalOutcome());
     } else if (message.mentions.parsedUsers.has(client.user!.id)) {
         // Random response to ping
         const p = Math.random() * 100;
