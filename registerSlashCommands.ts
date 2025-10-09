@@ -1,6 +1,4 @@
-import { SlashCommandBuilder } from '@discordjs/builders';
-import { REST } from '@discordjs/rest';
-import { Routes } from 'discord-api-types/v9';
+import { SlashCommandBuilder, REST, Routes } from 'discord.js';
 import { thisFishServers, token } from './config';
 
 

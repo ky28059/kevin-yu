@@ -73,7 +73,7 @@ async function updateServerName() {
 async function sendWooperWednesday() {
     for (const id of wooperChannels) {
         const channel = client.channels.cache.get(id);
-        if (!channel?.isTextBased()) continue;
+        if (!channel?.isSendable()) continue;
         await channel.send('https://tenor.com/view/wooper-wednesday-wooper-wednesday-pokemon-gif-21444101');
     }
 }
@@ -81,7 +81,7 @@ async function sendWooperWednesday() {
 async function endWooperWednesday() {
     for (const id of wooperChannels) {
         const channel = client.channels.cache.get(id);
-        if (!channel?.isTextBased()) continue;
+        if (!channel?.isSendable()) continue;
         await channel.send('https://tenor.com/view/wooper-gif-27280303');
     }
 }
@@ -89,7 +89,7 @@ async function endWooperWednesday() {
 async function postThisCat() {
     for (const id of wooperChannels) {
         const channel = client.channels.cache.get(id);
-        if (!channel?.isTextBased()) continue;
+        if (!channel?.isSendable()) continue;
         await channel.send('https://tenor.com/view/cat-kitty-pussycat-feline-gif-26001328');
     }
 }
@@ -104,7 +104,7 @@ async function checkBirthdays() {
 
         for (const id of b.channelIds) {
             const channel = client.channels.cache.get(id);
-            if (!channel?.isTextBased()) continue;
+            if (!channel?.isSendable()) continue;
             await channel.send(`<@${b.userId}>  ${generateRandomEmojiString(['🔥', '🥳', '🍰', '🎉'], 4, 6)}`);
         }
     }
@@ -356,7 +356,7 @@ client.on('messageDelete', async (message) => {
     if (message.guildId !== '1335666560420937740') return;
 
     const logChannel = client.channels.cache.get('1341632462341804103');
-    if (!logChannel?.isTextBased()) return;
+    if (!logChannel?.isSendable()) return;
 
     const deletedEmbed = new EmbedBuilder()
         .setAuthor({ name: message.author.username, iconURL: message.author.displayAvatarURL() })
@@ -374,7 +374,7 @@ client.on('messageUpdate', async (oldMessage, newMessage) => {
     if (oldMessage.guildId !== '1335666560420937740') return;
 
     const logChannel = client.channels.cache.get('1341632462341804103');
-    if (!logChannel?.isTextBased()) return;
+    if (!logChannel?.isSendable()) return;
 
     // Prevent logs for messages whose content hasn't changed
     if (oldMessage.content === newMessage.content) return;

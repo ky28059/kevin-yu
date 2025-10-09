@@ -2,18 +2,15 @@
   "name": "kevin-yu",
   "description": "literally me.",
   "main": "bot.ts",
-  "author": "Kevin Yu",
+  "author": "ky28059",
   "dependencies": {
-    "@discordjs/builders": "^1.6.3",
-    "@discordjs/rest": "^1.7.1",
     "@types/cron": "^2.0.0",
     "@types/node": "^20.9.0",
     "cron": "^3.1.0",
-    "discord-api-types": "^0.37.43",
-    "discord.js": "^14.11.0",
+    "discord.js": "^14.23.2",
     "luxon": "^3.4.4",
     "ts-node": "^10.9.1",
-    "typescript": "^5.2.2"
+    "typescript": "^5.9.3"
   },
   "scripts": {
     "start": "ts-node bot.ts",

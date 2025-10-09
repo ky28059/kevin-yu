@@ -77,6 +77,8 @@ type QuestionInfo = {
 export const gameChannels = new Set<string>();
 
 export function runSingleQuestion(message: Message, data: QuestionInfo) {
+    if (!message.channel.isSendable()) return; // TODO?
+
     gameChannels.add(message.channel.id);
     const shuffled = shuffle(data.sources);
     let i = 0;
@@ -89,6 +91,8 @@ export function runSingleQuestion(message: Message, data: QuestionInfo) {
     let guessStatus = Guess.TIMEOUT;
 
     collector.on('collect', (m) => {
+        if (!message.channel.isSendable()) return;
+
         // Request hint
         if (m.content === 'c.h')
             return void message.channel.send(`The first letter is ${data.name[0].toUpperCase()}`);
@@ -117,6 +121,8 @@ export function runSingleQuestion(message: Message, data: QuestionInfo) {
         }
     });
     collector.on('end', () => {
+        if (!message.channel.isSendable()) return;
+
         const statusMsg = guessStatus === Guess.CORRECT ? 'Correct! Good job!'
             : guessStatus === Guess.INCORRECT ? 'Incorrect.'
             : guessStatus === Guess.SKIPPED ? 'Question skipped.'
