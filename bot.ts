@@ -328,7 +328,7 @@ client.on('interactionCreate', async (interaction) => {
 
         // Simple heuristic to determine if birthdays are banned
         const birthdays = getBirthdays(ids);
-        if (birthdays.length / ids.size <= 0.01) {
+        if (ids.size > 100 || birthdays.length / ids.size <= 0.1) {
             const failEmbed = new EmbedBuilder().setDescription('Birthdays are disabled in public servers.');
             return void await interaction.reply({ embeds: [failEmbed], ephemeral: true });
         }
