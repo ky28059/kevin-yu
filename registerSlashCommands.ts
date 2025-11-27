@@ -36,17 +36,6 @@ const globalCommands = [
         .toJSON()
 ];
 
-const serverCommands = [
-    new SlashCommandBuilder()
-        .setName('status')
-        .setDescription('Gets the status of the server name refresh loop.')
-        .toJSON(),
-    new SlashCommandBuilder()
-        .setName('refresh')
-        .setDescription('Immediately refreshes the server name.')
-        .toJSON()
-]
-
 const thisFishCommand = new SlashCommandBuilder()
     .setName('this-fish')
     .setDescription('Repost this fish')
@@ -66,10 +55,10 @@ const rest = new REST({ version: '9' }).setToken(token);
         );
 
         // Register server specific commands
-        await rest.put(
-            Routes.applicationGuildCommands(clientId, '859197712426729532'),
-            { body: serverCommands }
-        );
+        // await rest.put(
+        //     Routes.applicationGuildCommands(clientId, '859197712426729532'),
+        //     { body: serverCommands }
+        // );
 
         // Register this fish in the allowed servers
         for (const server of thisFishServers) {

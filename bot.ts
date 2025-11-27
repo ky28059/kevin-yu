@@ -1,7 +1,6 @@
 import { ActivityType, Client, EmbedBuilder, TextChannel } from 'discord.js';
 import { CronJob } from 'cron';
 import { DateTime } from 'luxon';
-import { readdirSync } from 'fs';
 
 // Utils
 import { hugGifs, otterGifs, ponyoGifs, shrimpleGifs, thisFishGifs, wooperGifs } from './modules/gifs';
@@ -37,37 +36,11 @@ let statusInfo: ServerStatusInfo;
 
 let killNeil = false;
 
-let serverUpdateJob: CronJob<null, null>;
 let wooperWednesdayJob: CronJob<null, null>;
 let endWooperWednesdayJob: CronJob<null, null>;
 let postThisCatJob: CronJob<null, null>;
 let birthdayJob: CronJob<null, null>;
 
-
-// Randomizes the server name and icon
-async function updateServerName() {
-    // Parse names from subdirectories of `./icons`
-    const names = readdirSync('./icons', { withFileTypes: true })
-        .filter(dir => dir.isDirectory())
-        .map(dir => dir.name);
-    const name = names[Math.floor(Math.random() * names.length)];
-
-    // Set the guild name and random icon
-    const guild = client.guilds.cache.get('859197712426729532');
-    if (!guild) return;
-    const icons = readdirSync(`./icons/${name}`);
-    const iconIndex = Math.floor(Math.random() * icons.length);
-
-    await guild.setName(name);
-    await guild.setIcon(`./icons/${name}/${icons[iconIndex]}`);
-
-    statusInfo = {
-        name,
-        iconName: icons[iconIndex],
-        iconNumber: iconIndex + 1,
-        totalIcons: icons.length
-    }
-}
 
 // Reminds everyone that it is wooper wednesday!
 async function sendWooperWednesday() {
@@ -110,12 +83,6 @@ async function checkBirthdays() {
     }
 }
 
-// Formats the current server status info for display in commands
-function formatStatusInfo() {
-    const { name, iconName, iconNumber, totalIcons } = statusInfo;
-    return `**${name}**, using icon \`${iconName}\` (${iconNumber}/${totalIcons})`;
-}
-
 // Allowed words: esports, egads, eventful, ecommerce, emoji/emote/emoticon/emotion, edating, egirl, econ, enum,
 // elite, erase, eraser, epoch, enumerate, enormous, egregious, eventual, evade, eject, edragon, ebarbs
 // Removed patterns: mail(?:s|ed|ing)?, vents?
@@ -125,14 +92,7 @@ const perkashRegex = /^maya "?(.+)"? perkash$/i
 client.once('ready', async () => {
     console.log(`Logged in as ${client.user?.tag}!`);
 
-    // Start the server update and wooper wednesday cron jobs
-    serverUpdateJob = CronJob.from({
-        cronTime: '0 0 0 * * *',
-        onTick: updateServerName,
-        start: true,
-        timeZone,
-        runOnInit: true
-    });
+    // Start the wooper wednesday cron jobs
     wooperWednesdayJob = CronJob.from({
         cronTime: '0 0 0 * * Wed',
         onTick: sendWooperWednesday,
@@ -280,26 +240,6 @@ client.on('interactionCreate', async (interaction) => {
         );
 
         await interaction.reply({ embeds: [helpEmbed] });
-    } else if (interaction.commandName === 'status') {
-        const lastRunTimestamp = Math.floor(serverUpdateJob.lastDate()!.valueOf() / 1000);
-        const nextRunTimestamp = Math.floor(serverUpdateJob.nextDate().valueOf() / 1000);
-
-        const statusEmbed = new EmbedBuilder()
-            .setTitle('Server name status')
-            .setColor(0xf6b40c)
-            .setDescription(`The server name is currently ${formatStatusInfo()}.\n\nThe server was last updated on <t:${lastRunTimestamp}>. The next update is scheduled for <t:${nextRunTimestamp}>, <t:${nextRunTimestamp}:R>.`)
-
-        await interaction.reply({ embeds: [statusEmbed] });
-    } else if (interaction.commandName === 'refresh') {
-        await updateServerName();
-
-        const successEmbed = new EmbedBuilder()
-            .setTitle('Refresh successful!')
-            .setColor(0xf6b40c)
-            .setDescription(`The server name is now ${formatStatusInfo()}. The next update is scheduled <t:${Math.floor(serverUpdateJob.nextDate().valueOf() / 1000)}:R>.`)
-            .setFooter({ text: 'To avoid rate limits, it is recommended to refrain from calling this command again in the next 5 minutes.' })
-
-        await interaction.reply({ embeds: [successEmbed] });
     } else if (interaction.commandName === 'hug') {
         const num = interaction.options.getInteger('num');
         if (num && (num >= hugGifs.length || num < 0)) return void await interaction.reply({
