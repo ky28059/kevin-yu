@@ -7,7 +7,7 @@ import { hugGifs, otterGifs, ponyoGifs, shrimpleGifs, thisFishGifs, wooperGifs }
 import { gameChannels, questions, runSingleQuestion } from './modules/games';
 import { getBirthdays, getNextBirthday } from './modules/birthdays';
 import { generateRandomAnimalOutcome } from './modules/linda';
-import { generateRandomEmojiString, getRandom, truncate } from './util';
+import { generateRandomEmojiString, getRandom, truncate } from './utils/misc';
 
 // Config
 import { birthdays, thisFishServers, timeZone, token, wooperChannels } from './config';

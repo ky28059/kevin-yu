@@ -1,4 +1,4 @@
-import { getRandom } from '../util';
+import { getRandom } from '../utils/misc';
 
 const land = [
     'baby giraffes',
