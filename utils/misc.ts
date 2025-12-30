@@ -3,6 +3,16 @@ export function truncate(str: string, len: number) {
     return str.slice(0, len - 3).trimEnd() + '...';
 }
 
+export function chunked<T>(arr: T[], size: number) {
+    return arr.reduce((res: T[][], item, index) => {
+        const chunkIndex = Math.floor(index / size);
+        if (!res[chunkIndex]) res[chunkIndex] = [];
+
+        res[chunkIndex].push(item);
+        return res;
+    }, []);
+}
+
 // Gets the specified element from an array, or a random one if no number is supplied.
 export function getRandom<T>(arr: T[], num?: number | null) {
     const index = num ?? Math.floor(Math.random() * arr.length);
