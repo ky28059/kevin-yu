@@ -16,10 +16,6 @@ export const wooperChannels = [
     '...'
 ];
 
-export const thisFishServers = [
-    '...'
-];
-
 export const birthdays: BirthdayInfo[] = [
     {
         userId: '...',

@@ -1,12 +1,7 @@
-import { SlashCommandBuilder, REST, Routes } from 'discord.js';
-import { thisFishServers, token } from './config';
+import { REST, Routes } from 'discord.js';
+import { token } from './config';
 import commands from './commands';
 
-
-const thisFishCommand = new SlashCommandBuilder()
-    .setName('this-fish')
-    .setDescription('Repost this fish')
-    .toJSON()
 
 const clientId = '973385182566580344';
 const rest = new REST({ version: '9' }).setToken(token);
@@ -28,14 +23,6 @@ const rest = new REST({ version: '9' }).setToken(token);
         //     Routes.applicationGuildCommands(clientId, '859197712426729532'),
         //     { body: serverCommands }
         // );
-
-        // Register this fish in the allowed servers
-        for (const server of thisFishServers) {
-            await rest.put(
-                Routes.applicationGuildCommands(clientId, server),
-                { body: [thisFishCommand] }
-            )
-        }
 
         console.log('Successfully reloaded application and guild (/) commands.');
     } catch (error) {

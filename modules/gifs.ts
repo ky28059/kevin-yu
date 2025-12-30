@@ -336,10 +336,3 @@ export const frogGifs = [
     'https://tenor.com/view/abi-toads-shroom-cage-mirror-curious-gif-10583476416460386365',
     'https://tenor.com/view/abitoads-abi-toads-cute-relaxing-laying-gif-2023395189955333553'
 ]
-
-export const thisFishGifs = [
-    'https://media.discordapp.net/attachments/1107748377631936703/1151554784122372178/makesweet-jsm0uw.gif',
-    'https://media.discordapp.net/attachments/950102545571913814/1152689716831989830/makesweet-h1q00d.gif',
-    'https://media.discordapp.net/attachments/950102545571913814/1152689836206063826/makesweet-174pd4.gif',
-    'https://media.discordapp.net/attachments/950102545571913814/1152690074161520681/makesweet-yjpa03.gif'
-]

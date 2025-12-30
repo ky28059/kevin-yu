@@ -4,7 +4,7 @@ import { DateTime } from 'luxon';
 
 // Utils
 import type { Command, CommandGroup } from './utils/commands';
-import { otterGifs, ponyoGifs, thisFishGifs, wooperGifs } from './modules/gifs';
+import { otterGifs, ponyoGifs, wooperGifs } from './modules/gifs';
 import { gameChannels, questions, runSingleQuestion } from './modules/games';
 import { getNextBirthday } from './modules/birthdays';
 import { generateRandomAnimalOutcome } from './modules/linda';
@@ -12,7 +12,7 @@ import { generateRandomEmojiString, getRandom, truncate } from './utils/misc';
 import commands from './commands';
 
 // Config
-import { birthdays, thisFishServers, timeZone, token, wooperChannels } from './config';
+import { birthdays, timeZone, token, wooperChannels } from './config';
 
 
 declare module 'discord.js' {
@@ -103,7 +103,7 @@ async function checkBirthdays() {
 export const ethanRegex = /\be(sports?|gads|ventful|commerce|mo(?:ji|te|ticon|tion(?:ally)?)s?|dat(?:e[sd]?|ing)|girls?|con(?:omic(?:s|al(?:ly)?)?)?|nums?|lit(?:e|ist)s?|ras(?:e[sd]?|ing)|rasers?|pochs?|numera(?:t(?:e[sd]?|ing)|ble)|norm(?:ous(?:ly)?|ity)|gregious(?:ly)?|ventual(?:ly)?|va(?:de[sd]?|sions?)|ject(?:ed|ion|ing)?s?|drag(?:on)?s?|barb(?:arian)?s?)\b/i
 export const perkashRegex = /^maya "?(.+)"? perkash$/i
 
-client.once('ready', async () => {
+client.once('clientReady', async () => {
     console.log(`Logged in as ${client.user?.tag}!`);
 
     // Start the wooper wednesday cron jobs
@@ -171,9 +171,6 @@ client.on('messageCreate', async (message) => {
     } else if (message.author.id === '355534246439419904' && message.content === '<@973385182566580344> stop killing neil') {
         killNeil = false;
         await message.react('👍');
-    } else if (thisFishServers.includes(message.guild.id) && message.content.includes('this fish')) {
-        // Repost this fish
-        await message.reply(getRandom(thisFishGifs));
     } else if (message.guild.id === '1335666560420937740' && message.author.id === '533836540166799360' && message.content.match(/i(?:t'?)?s ok/i)) {
         // Discourage linda from self-dep
         await message.reply(generateRandomAnimalOutcome());
@@ -229,10 +226,6 @@ client.on('messageCreate', async (message) => {
 
 client.on('interactionCreate', async (interaction) => {
     if (!interaction.isChatInputCommand()) return;
-
-    if (interaction.commandName === 'this-fish') {
-        await interaction.reply(getRandom(thisFishGifs));
-    }
 
     const raw = client.commands.get(interaction.commandName);
     if (!raw) return;
