@@ -10,8 +10,8 @@ export type BirthdayInfo = {
 
 export function getNextBirthday(date: DateTime, now: DateTime) {
     return (date.month < now.month) || (date.month === now.month && date.day < now.day)
-        ? DateTime.local(now.year + 1, date.month, date.day)
-        : DateTime.local(now.year, date.month, date.day)
+        ? DateTime.local(now.year + 1, date.month, date.day, { zone: timeZone })
+        : DateTime.local(now.year, date.month, date.day, { zone: timeZone })
 }
 
 export function getBirthdays(ids: Set<string>) {
