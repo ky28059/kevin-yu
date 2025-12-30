@@ -1,40 +1,7 @@
 import { SlashCommandBuilder, REST, Routes } from 'discord.js';
 import { thisFishServers, token } from './config';
+import commands from './commands';
 
-
-const globalCommands = [
-    new SlashCommandBuilder()
-        .setName('help')
-        .setDescription('Helps you understand.')
-        .toJSON(),
-    new SlashCommandBuilder()
-        .setName('hug')
-        .setDescription('Send a hug gif!')
-        .addIntegerOption(option => option
-            .setName('num')
-            .setDescription('The hug gif to send. If not specified, this is randomized!'))
-        .toJSON(),
-    new SlashCommandBuilder()
-        .setName('woop')
-        .setDescription('Woop woop!')
-        .toJSON(),
-    new SlashCommandBuilder()
-        .setName('ponyo')
-        .setDescription('Ponyo loves Sosuke!')
-        .toJSON(),
-    new SlashCommandBuilder()
-        .setName('shrimple')
-        .setDescription('Show how shrimple (or clampicated) something is.')
-        .toJSON(),
-    new SlashCommandBuilder()
-        .setName('otter')
-        .setDescription('Man...')
-        .toJSON(),
-    new SlashCommandBuilder()
-        .setName('birthdays')
-        .setDescription('Gets upcoming birthdays in the current server.')
-        .toJSON()
-];
 
 const thisFishCommand = new SlashCommandBuilder()
     .setName('this-fish')
@@ -46,6 +13,8 @@ const rest = new REST({ version: '9' }).setToken(token);
 
 (async () => {
     try {
+        const globalCommands = commands.map(c => c.data);
+
         console.log('Started refreshing application (/) commands.');
 
         // Register global commands

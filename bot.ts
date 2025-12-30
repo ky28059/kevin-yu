@@ -1,17 +1,25 @@
-import { ActivityType, Client, EmbedBuilder, TextChannel } from 'discord.js';
+import { ActivityType, Client, Collection, EmbedBuilder, TextChannel } from 'discord.js';
 import { CronJob } from 'cron';
 import { DateTime } from 'luxon';
 
 // Utils
-import { hugGifs, otterGifs, ponyoGifs, shrimpleGifs, thisFishGifs, wooperGifs } from './modules/gifs';
+import type { Command, CommandGroup } from './utils/commands';
+import { otterGifs, ponyoGifs, thisFishGifs, wooperGifs } from './modules/gifs';
 import { gameChannels, questions, runSingleQuestion } from './modules/games';
-import { getBirthdays, getNextBirthday } from './modules/birthdays';
+import { getNextBirthday } from './modules/birthdays';
 import { generateRandomAnimalOutcome } from './modules/linda';
 import { generateRandomEmojiString, getRandom, truncate } from './utils/misc';
+import commands from './commands';
 
 // Config
 import { birthdays, thisFishServers, timeZone, token, wooperChannels } from './config';
 
+
+declare module 'discord.js' {
+    interface Client {
+        commands: Collection<string, Command | CommandGroup>;
+    }
+}
 
 const client = new Client({
     intents: [
@@ -25,6 +33,12 @@ const client = new Client({
     presence: { activities: [{ type: ActivityType.Watching, name: 'y\'all 🥰' }] },
     allowedMentions: { repliedUser: false }
 });
+
+client.commands = new Collection();
+for (const command of commands) {
+    console.log(`Loaded /${command.data.name}`);
+    client.commands.set(command.data.name, command);
+}
 
 type ServerStatusInfo = {
     name: string,
@@ -86,8 +100,8 @@ async function checkBirthdays() {
 // Allowed words: esports, egads, eventful, ecommerce, emoji/emote/emoticon/emotion, edating, egirl, econ, enum,
 // elite, erase, eraser, epoch, enumerate, enormous, egregious, eventual, evade, eject, edragon, ebarbs
 // Removed patterns: mail(?:s|ed|ing)?, vents?
-const ethanRegex = /\be(sports?|gads|ventful|commerce|mo(?:ji|te|ticon|tion(?:ally)?)s?|dat(?:e[sd]?|ing)|girls?|con(?:omic(?:s|al(?:ly)?)?)?|nums?|lit(?:e|ist)s?|ras(?:e[sd]?|ing)|rasers?|pochs?|numera(?:t(?:e[sd]?|ing)|ble)|norm(?:ous(?:ly)?|ity)|gregious(?:ly)?|ventual(?:ly)?|va(?:de[sd]?|sions?)|ject(?:ed|ion|ing)?s?|drag(?:on)?s?|barb(?:arian)?s?)\b/i
-const perkashRegex = /^maya "?(.+)"? perkash$/i
+export const ethanRegex = /\be(sports?|gads|ventful|commerce|mo(?:ji|te|ticon|tion(?:ally)?)s?|dat(?:e[sd]?|ing)|girls?|con(?:omic(?:s|al(?:ly)?)?)?|nums?|lit(?:e|ist)s?|ras(?:e[sd]?|ing)|rasers?|pochs?|numera(?:t(?:e[sd]?|ing)|ble)|norm(?:ous(?:ly)?|ity)|gregious(?:ly)?|ventual(?:ly)?|va(?:de[sd]?|sions?)|ject(?:ed|ion|ing)?s?|drag(?:on)?s?|barb(?:arian)?s?)\b/i
+export const perkashRegex = /^maya "?(.+)"? perkash$/i
 
 client.once('ready', async () => {
     console.log(`Logged in as ${client.user?.tag}!`);
@@ -216,77 +230,22 @@ client.on('messageCreate', async (message) => {
 client.on('interactionCreate', async (interaction) => {
     if (!interaction.isChatInputCommand()) return;
 
-    if (interaction.commandName === 'help') {
-        const helpEmbed = new EmbedBuilder()
-            .setTitle('kevin yu.')
-            .setColor(0xf6b40c)
-            .setDescription('It is I! ~~Dio~~ Kevin Yu! This bot occasionally does things. Ping <@355534246439419904> if it breaks.')
-
-        if (interaction.guildId === '859197712426729532') helpEmbed.addFields(
-            { name: 'maya automated perkash', value: `All messages matched in the form of \`maya [...] perkash\` will update the <#956055434173751306> description accordingly. For the curious, the regex used is \`${perkashRegex}\`.` },
-            { name: 'server name shuffling', value: 'Every 24 hours, the server name is shuffled randomly between the cool people of this server 🥰. Get the status of the refresh loop with `/status` and immediately trigger a refresh with `/refresh`.' }
-        );
-
-        if (interaction.guildId === '617085013531295774') helpEmbed.addFields(
-            { name: 'ethan gads!', value: `Kevin Yu will prefix "ethan" to allowed e-words. For the curious, the regex used is: \`\`\`\n${ethanRegex}\n\`\`\`` }
-        );
-
-        helpEmbed.addFields(
-            { name: 'wooper wednesday', value: 'A weekly celebration of wooper wednesday, as one is wont to observe. You can also use `/woop` to celebrate early!' },
-            { name: '🐱 theory', value: 'Use `c.c` to start a category theory guessing game! (parodying [SciOlyID](https://sciolyid.org/about/)\'s bird identification bot)' },
-            { name: '🫂', value: 'Use `/hug` to send a random hug gif :D', inline: true },
-            { name: '🦐', value: 'Use `/shrimple` to show how shrimple (or clampicated) something is.', inline: true },
-            { name: '🦦', value: 'Use `/otter` to send a random otter gif 🦦', inline: true }
-        );
-
-        await interaction.reply({ embeds: [helpEmbed] });
-    } else if (interaction.commandName === 'hug') {
-        const num = interaction.options.getInteger('num');
-        if (num && (num >= hugGifs.length || num < 0)) return void await interaction.reply({
-            embeds: [
-                new EmbedBuilder()
-                    .setAuthor({ name: `Invalid index! Keep indexes between [0, ${hugGifs.length - 1}].` })
-                    .setColor(0xf6b40c)
-            ]
-        });
-        await interaction.reply(getRandom(hugGifs, num));
-    } else if (interaction.commandName === 'woop') {
-        await interaction.reply(getRandom(wooperGifs));
-    } else if (interaction.commandName === 'ponyo') {
-        await interaction.reply(getRandom(ponyoGifs));
-    } else if (interaction.commandName === 'shrimple') {
-        await interaction.reply(getRandom(shrimpleGifs));
-    } else if (interaction.commandName === 'otter') {
-        await interaction.reply(getRandom(otterGifs));
-    } else if (interaction.commandName === 'this-fish') {
+    if (interaction.commandName === 'this-fish') {
         await interaction.reply(getRandom(thisFishGifs));
-    } else if (interaction.commandName === 'birthdays') {
-        const members = interaction.guild?.members.cache.values();
-        const ids = members
-            ? new Set([...members].map(m => m.id))
-            : new Set<string>()
+    }
 
-        // Simple heuristic to determine if birthdays are banned
-        const birthdays = getBirthdays(ids);
-        if (ids.size > 100 || birthdays.length / ids.size <= 0.1) {
-            const failEmbed = new EmbedBuilder().setDescription('Birthdays are disabled in public servers.');
-            return void await interaction.reply({ embeds: [failEmbed], ephemeral: true });
-        }
+    const raw = client.commands.get(interaction.commandName);
+    if (!raw) return;
 
-        const desc = birthdays
-            .map((d, i) => `${i + 1}. <@${d.userId}> on <t:${d.date.valueOf() / 1000}:D> <t:${d.date.valueOf() / 1000}:R>`)
-            .join('\n')
-            || '*No birthdays known for the current server!*'
+    const command = 'commands' in raw
+        ? raw.commands[interaction.options.getSubcommand()]
+        : raw
+    if (!command) return;
 
-        const birthdayEmbed = new EmbedBuilder()
-            .setTitle(interaction.guild
-                ? `Upcoming ${interaction.guild.name} birthdays  🎉`
-                : 'Upcoming birthdays  🎉')
-            .setColor(0xf6b40c)
-            .setDescription(desc)
-            .setFooter({ text: 'If any of the above dates are wrong, please let me know!' })
-
-        await interaction.reply({ embeds: [birthdayEmbed] })
+    try {
+        await command.execute(interaction);
+    } catch {
+        // TODO: log
     }
 });
 
